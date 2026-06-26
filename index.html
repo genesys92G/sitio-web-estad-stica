@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estadística Mágica - DBA 9</title>
+    <title>Plataforma Educativa de Estadística - DBA 9 - Grado 10°</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -12,8 +12,11 @@
                 extend: {
                     colors: {
                         primary: {
-                            600: '#0076c0',
-                            700: '#005c96',
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
                         }
                     }
                 }
@@ -21,75 +24,110 @@
         }
     </script>
     <style>
+        /* Estilos personalizados de accesibilidad y transiciones */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.3s, color 0.3s, font-size 0.2s;
         }
-        /* --- ESTILOS COMPATIBLES CON LA BOTONERA ORIGINAL --- */
-        .nav-tabs-container {
-            background-color: #0076c0 !important;
+        .font-size-normal { font-size: 16px; }
+        .font-size-medium { font-size: 19px; }
+        .font-size-large { font-size: 22px; }
+        
+        /* Animaciones para interactividad */
+        .interactive-card {
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-        .tab-btn-custom {
-            background: transparent;
-            border: none;
-            color: rgba(255, 255, 255, 0.9);
-            transition: all 0.2s;
-            border-bottom: 3px solid transparent;
+        .interactive-card:hover {
+            transform: translateY(-5px);
         }
-        .tab-btn-custom:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
+
+        /* Estilos para el menú desplegable al pasar el cursor (Hover) */
+        .dropdown:hover .dropdown-menu {
+            display: block;
         }
-        .tab-btn-custom.active-tab {
-            background-color: #005c96 !important;
-            color: #ffffff !important;
-            border-bottom: 3px solid #ffffff !important;
+
+        /* Barras de desplazamiento personalizadas y limpias */
+        .scroll-container::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .scroll-container::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        .scroll-container dark::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .scroll-container::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Objeto arrastrable simulado */
+        .draggable-item {
+            cursor: grab;
+        }
+        .draggable-item:active {
+            cursor: grabbing;
         }
     </style>
 </head>
-<body class="bg-[#f4f7f9] text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<body class="bg-slate-50 text-slate-800 font-size-normal dark:bg-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
 
-    <header class="bg-white dark:bg-slate-800 shadow-sm sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700">
-        <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+    <header class="bg-white dark:bg-slate-800 shadow-md sticky top-0 z-50 transition-colors border-b border-slate-200 dark:border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
             <div class="flex items-center space-x-3">
-                <div class="bg-gradient-to-135 from-[#0076c0] to-[#9d4edd] w-11 h-11 rounded-lg flex items-center justify-center text-white text-xl font-bold shadow-sm">
-                    📊
-                </div>
+                <div class="bg-primary-600 text-white p-2 rounded-lg font-bold text-xl shadow-md">📊</div>
                 <div>
-                    <h1 class="text-xl font-bold tracking-tight text-[#005c96] dark:text-primary-100">Estadística Mágica</h1>
+                    <h1 class="text-lg font-bold tracking-tight text-primary-700 dark:text-primary-100">Estadística Mágica</h1>
                     <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Grado 10° • Ministerio de Educación Nacional</p>
                 </div>
             </div>
             
             <div class="flex items-center space-x-2 bg-slate-100 dark:bg-slate-700 p-1.5 rounded-xl border border-slate-200 dark:border-slate-600">
                 <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 px-2">Accesibilidad:</span>
-                <button id="btn-font" class="bg-white dark:bg-slate-600 text-slate-700 dark:text-slate-200 font-bold px-3 py-1.5 rounded-lg text-sm shadow-sm transition flex items-center">
-                    <span>AA</span><span id="font-level-badge" class="bg-blue-50 dark:bg-slate-900 text-[#0076c0] text-xs px-1.5 py-0.5 rounded ml-1">1x</span>
+                
+                <button id="btn-font" class="bg-white dark:bg-slate-600 hover:bg-slate-50 dark:hover:bg-slate-500 text-slate-700 dark:text-slate-200 font-bold px-3 py-1.5 rounded-lg text-sm shadow-sm transition flex items-center gap-1" title="Aumentar tamaño de letra">
+                    <span>AA</span><span id="font-level-badge" class="bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 text-xs px-1.5 py-0.5 rounded ml-1">1x</span>
                 </button>
-                <button id="btn-contrast" class="bg-white dark:bg-slate-600 text-slate-700 dark:text-slate-200 font-bold px-3 py-1.5 rounded-lg text-sm shadow-sm transition flex items-center gap-1">
-                    <span id="contrast-icon">🌙</span> <span>Contraste</span>
+                
+                <button id="btn-contrast" class="bg-white dark:bg-slate-600 hover:bg-slate-50 dark:hover:bg-slate-500 text-slate-700 dark:text-slate-200 font-bold px-3 py-1.5 rounded-lg text-sm shadow-sm transition flex items-center gap-1" title="Cambiar Contraste">
+                    <span id="contrast-icon">🌙</span> <span class="hidden sm:inline">Contraste</span>
                 </button>
             </div>
         </div>
 
-        <nav class="nav-tabs-container text-white shadow-md">
-            <div class="max-w-7xl mx-auto px-4 flex flex-wrap">
-                <button onclick="openTab(event, 'inicio')" class="tab-btn-custom active-tab px-5 py-3.5 font-bold text-sm flex items-center gap-2 focus:outline-none">
+        <nav class="bg-primary-600 dark:bg-primary-800 text-white shadow-inner relative">
+            <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-center md:justify-start">
+                <button onclick="openTab('inicio')" class="tab-btn px-4 py-3 font-semibold text-sm transition hover:bg-primary-700 focus:outline-none border-b-4 border-white bg-primary-700">
                     🏠 Inicio
                 </button>
-                <button onclick="openTab(event, 'teoria')" class="tab-btn-custom px-5 py-3.5 font-bold text-sm flex items-center gap-2 focus:outline-none">
+                <button onclick="openTab('teoria')" class="tab-btn px-4 py-3 font-semibold text-sm transition hover:bg-primary-700 focus:outline-none border-b-4 border-transparent">
                     📘 1. Fundamentos y DBA
                 </button>
-                <button onclick="openTab(event, 'diagnostica')" class="tab-btn-custom px-5 py-3.5 font-bold text-sm flex items-center gap-2 focus:outline-none">
+                <button onclick="openTab('diagnostica')" class="tab-btn px-4 py-3 font-semibold text-sm transition hover:bg-primary-700 focus:outline-none border-b-4 border-transparent">
                     📝 2. Eval. Diagnóstica
                 </button>
-                <button onclick="openTab(event, 'actividades')" class="tab-btn-custom px-5 py-3.5 font-bold text-sm flex items-center gap-2 focus:outline-none">
-                    🎮 3. Banco de Actividades
-                </button>
-                <button onclick="openTab(event, 'encuesta')" class="tab-btn-custom px-5 py-3.5 font-bold text-sm flex items-center gap-2 focus:outline-none">
+                
+                <div class="dropdown relative inline-block">
+                    <button onclick="openTab('actividades')" class="tab-btn px-4 py-3 font-semibold text-sm transition hover:bg-primary-700 focus:outline-none border-b-4 border-transparent flex items-center gap-1">
+                        🎮 3. Banco de Actividades <span class="text-[10px]">▼</span>
+                    </button>
+                    <div class="dropdown-menu absolute hidden bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 min-w-[260px] shadow-xl rounded-b-xl overflow-hidden z-[100] border border-slate-200 dark:border-slate-700">
+                        <a href="#" onclick="launchActivity(event, 1)" class="block px-4 py-3 text-xs font-semibold hover:bg-slate-100 dark:hover:bg-slate-700 border-b border-slate-100 dark:border-slate-700">🎯 Actividad 1: El Centro del Laberinto</a>
+                        <a href="#" onclick="launchActivity(event, 2)" class="block px-4 py-3 text-xs font-semibold hover:bg-slate-100 dark:hover:bg-slate-700 border-b border-slate-100 dark:border-slate-700">⚡ Actividad 2: Cazadores de Sesgo Estructural</a>
+                        <a href="#" onclick="launchActivity(event, 3)" class="block px-4 py-3 text-xs font-semibold hover:bg-slate-100 dark:hover:bg-slate-700 border-b border-slate-100 dark:border-slate-700">📈 Actividad 3: Simulador de Dispersión Dinámica</a>
+                        <a href="#" onclick="launchActivity(event, 4)" class="block px-4 py-3 text-xs font-semibold hover:bg-slate-100 dark:hover:bg-slate-700 border-b border-slate-100 dark:border-slate-700">🧮 Actividad 4: Desafío de Frecuencias y Mediana</a>
+                        <a href="#" onclick="launchActivity(event, 5)" class="block px-4 py-3 text-xs font-semibold hover:bg-slate-100 dark:hover:bg-slate-700">💎 Actividad 5: Co-relación Extrema de Datos</a>
+                    </div>
+                </div>
+
+                <button onclick="openTab('encuesta')" class="tab-btn px-4 py-3 font-semibold text-sm transition hover:bg-primary-700 focus:outline-none border-b-4 border-transparent">
                     ⭐ 4. Valoración del Sitio
                 </button>
-                <button onclick="openTab(event, 'creditos')" class="tab-btn-custom px-5 py-3.5 font-bold text-sm flex items-center gap-2 focus:outline-none">
+                <button onclick="openTab('creditos')" class="tab-btn px-4 py-3 font-semibold text-sm transition hover:bg-primary-700 focus:outline-none border-b-4 border-transparent">
                     👥 5. Créditos
                 </button>
             </div>
@@ -98,49 +136,57 @@
 
     <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
 
-        <section id="tab-inicio" class="tab-content space-y-8">
-            <div class="bg-white dark:bg-slate-800 border-l-4 border-[#ffcc00] p-4 rounded-r-lg shadow-sm">
-                <p class="text-sm text-[#005c96] dark:text-slate-300">
-                    💡 <strong>Explora las pestañas de navegación superiores</strong> para acceder a los contenidos teóricos, juegos dinámicos y autoevaluaciones científicas.
+        <section id="tab-inicio" class="tab-content space-y-8 animate-fade-in">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 sm:p-8 shadow-md border border-slate-100 dark:border-slate-700 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-primary-100 dark:bg-primary-900/30 rounded-full -mr-10 -mt-10 pointer-events-none"></div>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-primary-700 dark:text-primary-300 mb-4">¡Bienvenidos al Universo de los Datos!</h2>
+                <p class="leading-relaxed text-slate-600 dark:text-slate-300 mb-4">
+                    Esta plataforma educativa interactiva ha sido diseñada específicamente para estudiantes de <strong>Grado 10°</strong> de Colombia, alineada de forma rigurosa con los <strong>Derechos Básicos de Aprendizaje (DBA)</strong> establecidos por el Ministerio de Educación Nacional. Aquí aprenderás a no dejarte engañar por los números, descubriendo cómo las medidas de tendencia central y de dispersión trabajan juntas para revelar la verdadera historia detrás de cualquier conjunto de información.
+                </p>
+                <p class="font-medium text-primary-600 dark:text-primary-400">
+                    💡 Explora las pestañas de navegación superiores para acceder a los contenidos teóricos, juegos dinámicos y autoevaluaciones científicas.
                 </p>
             </div>
 
             <div>
-                <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-5 flex items-center gap-2">
+                <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4 flex items-center gap-2">
                     🔍 Resumen interactivo de componentes clave
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden border border-slate-100 dark:border-slate-700">
-                        <div class="bg-[#0076c0] h-40 flex items-center justify-center relative text-white">
-                            <div class="absolute top-5 text-[10px] font-bold text-red-500 bg-white/90 px-1.5 py-0.5 rounded shadow-sm">Media / Centro</div>
-                            <div class="absolute border-l-2 border-dashed border-red-500 h-[72px] top-9"></div>
-                            <div class="flex items-end gap-2 h-16 mt-6">
-                                <div class="w-4 bg-white/40 h-6 rounded-t"></div>
-                                <div class="w-4 bg-white/40 h-10 rounded-t"></div>
-                                <div class="w-4 bg-white h-14 rounded-t"></div>
-                                <div class="w-4 bg-white/40 h-8 rounded-t"></div>
-                            </div>
+                    <div class="interactive-card bg-white dark:bg-slate-800 rounded-2xl shadow-md border border-slate-100 dark:border-slate-700 overflow-hidden cursor-pointer" onclick="openTab('teoria')">
+                        <div class="bg-gradient-to-r from-blue-500 to-primary-600 p-6 flex justify-center items-center h-48">
+                            <svg class="w-full h-full max-h-36" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="10" y="70" width="30" height="20" rx="3" fill="#ffffff" fill-opacity="0.4"/>
+                                <rect x="50" y="40" width="30" height="50" rx="3" fill="#ffffff" fill-opacity="0.6"/>
+                                <rect x="90" y="20" width="30" height="70" rx="3" fill="#ffffff"/>
+                                <rect x="130" y="50" width="30" height="40" rx="3" fill="#ffffff" fill-opacity="0.5"/>
+                                <circle cx="105" cy="20" r="4" fill="#ef4444"/>
+                                <line x1="105" y1="10" x2="105" y2="90" stroke="#ef4444" stroke-width="2" stroke-dasharray="4 4"/>
+                                <text x="112" y="16" fill="#ef4444" font-weight="bold" font-size="10">Media / Centro</text>
+                            </svg>
                         </div>
                         <div class="p-6">
-                            <h4 class="font-bold text-base text-[#005c96] dark:text-primary-300 mb-2">Medidas de Tendencia Central</h4>
-                            <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                            <h4 class="font-bold text-lg text-primary-700 dark:text-primary-300 mb-2">Medidas de Tendencia Central</h4>
+                            <p class="text-sm text-slate-600 dark:text-slate-400">
                                 Descubre dónde se agrupa el corazón de los datos. Aprende sobre la Media, la Mediana y la Moda, y analiza críticamente cuál representa mejor la realidad según la situación.
                             </p>
                         </div>
                     </div>
 
-                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden border border-slate-100 dark:border-slate-700">
-                        <div class="bg-[#9d4edd] h-40 flex flex-col items-center justify-center relative text-white px-4">
-                            <span class="text-xs font-bold mb-3">Rango y Desviación Estándar</span>
-                            <div class="w-3/5 h-1 bg-white/30 rounded relative flex items-center justify-center">
-                                <span class="absolute left-0 text-white text-xs">◀</span>
-                                <div class="w-3.5 h-3.5 bg-white rounded-full shadow-md"></div>
-                                <span class="absolute right-0 text-white text-xs">▶</span>
-                            </div>
+                    <div class="interactive-card bg-white dark:bg-slate-800 rounded-2xl shadow-md border border-slate-100 dark:border-slate-700 overflow-hidden cursor-pointer" onclick="openTab('teoria')">
+                        <div class="bg-gradient-to-r from-purple-500 to-indigo-600 p-6 flex justify-center items-center h-48">
+                            <svg class="w-full h-full max-h-36" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="100" cy="50" r="8" fill="#ffffff"/>
+                                <circle cx="40" cy="50" r="6" fill="#ffffff" fill-opacity="0.5"/>
+                                <circle cx="160" cy="50" r="6" fill="#ffffff" fill-opacity="0.5"/>
+                                <path d="M40 50 H160" stroke="#ffffff" stroke-width="2" stroke-dasharray="2 2"/>
+                                <path d="M40 45 V55 M160 45 V55 M100 40 V60" stroke="#ffffff" stroke-width="2"/>
+                                <text x="45" y="35" fill="#ffffff" font-weight="bold" font-size="9">Rango y Desviación Estándar</text>
+                            </svg>
                         </div>
                         <div class="p-6">
-                            <h4 class="font-bold text-base text-[#9d4edd] dark:text-purple-300 mb-2">Medidas de Dispersión</h4>
-                            <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                            <h4 class="font-bold text-lg text-purple-700 dark:text-purple-300 mb-2">Medidas de Dispersión</h4>
+                            <p class="text-sm text-slate-600 dark:text-slate-400">
                                 ¿Qué tan dispersos o qué tan homogéneos son tus datos? Domina el rango, la varianza y la desviación estándar para entender la variabilidad y los riesgos de un caso real.
                             </p>
                         </div>
@@ -149,17 +195,18 @@
             </div>
         </section>
 
+
         <section id="tab-teoria" class="tab-content hidden space-y-6">
             <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-md border border-slate-100 dark:border-slate-700">
-                <div class="border-l-4 border-[#0076c0] pl-4 mb-4">
-                    <h2 class="text-xl font-bold text-[#005c96] dark:text-primary-300">Derechos Básicos de Aprendizaje (DBA 9)</h2>
+                <div class="border-l-4 border-primary-600 pl-4 mb-4">
+                    <h2 class="text-xl font-bold text-primary-700 dark:text-primary-300">Derechos Básicos de Aprendizaje (DBA 9)</h2>
                 </div>
                 <p class="text-slate-700 dark:text-slate-300 italic bg-slate-50 dark:bg-slate-700 p-4 rounded-xl">
                     "Comprende y explica el carácter relativo de las medidas de tendencia central y de dispersión, junto con algunas de sus propiedades, y la necesidad de complementar una medida con otra para obtener mejores lecturas de los datos."
                 </p>
                 
-                <h3 class="font-bold mt-5 mb-2 text-slate-800 dark:text-slate-200">Evidencias de Aprendizaje Estipuladas:</h3>
-                <ul class="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-400">
+                <h3 class="font-bold mt-4 mb-2 text-slate-800 dark:text-slate-200">Evidencias de Aprendizaje Estipuladas:</h3>
+                <ul class="list-disc list-inside space-y-1.5 text-sm text-slate-600 dark:text-slate-400">
                     <li>Encuentra las medidas de tendencia central y de dispersión usando herramientas tecnológicas.</li>
                     <li>Interpreta y compara lo que representan cada una de las medidas de tendencia central en un conjunto de datos.</li>
                     <li>Interpreta y compara lo que representan cada una de las medidas de dispersión en un conjunto de datos.</li>
@@ -172,22 +219,22 @@
                 <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100">Fundamentación Teórica Clave</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="space-y-2">
-                        <h3 class="font-bold text-[#0076c0]">1. Medidas de Tendencia Central</h3>
+                        <h3 class="font-bold text-primary-600 dark:text-primary-400">1. Medidas de Tendencia Central</h3>
                         <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
                             Buscan identificar el valor numérico en torno al cual se distribuyen u organizan los datos de una muestra:
                         </p>
-                        <ul class="list-none text-xs space-y-1.5 bg-slate-50 dark:bg-slate-700 p-3 rounded-lg">
+                        <ul class="list-none text-xs space-y-1 bg-slate-50 dark:bg-slate-700 p-3 rounded-lg">
                             <li><strong>Media (Promedio):</strong> Es el centro de gravedad numérico. Sensible a valores extremos.</li>
                             <li><strong>Mediana:</strong> El valor central exacto; divide el universo de datos en 50% menores y 50% mayores. Insensible a valores extremos.</li>
                             <li><strong>Moda:</strong> El dato con mayor frecuencia absoluta.</li>
                         </ul>
                     </div>
                     <div class="space-y-2">
-                        <h3 class="font-bold text-[#9d4edd]">2. Medidas de Dispersión</h3>
+                        <h3 class="font-bold text-purple-600 dark:text-purple-400">2. Medidas de Dispersión</h3>
                         <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
                             Miden qué tan cerca o lejos de la media se encuentran los datos, indicando el nivel de homogeneidad:
                         </p>
-                        <ul class="list-none text-xs space-y-1.5 bg-slate-50 dark:bg-slate-700 p-3 rounded-lg">
+                        <ul class="list-none text-xs space-y-1 bg-slate-50 dark:bg-slate-700 p-3 rounded-lg">
                             <li><strong>Rango:</strong> Diferencia exacta entre el dato máximo y mínimo.</li>
                             <li><strong>Varianza y Desviación Estándar ($\sigma$):</strong> Expresan el promedio de las desviaciones al cuadrado y la distancia típica real de los datos respecto a su media.</li>
                         </ul>
@@ -196,94 +243,386 @@
             </div>
         </section>
 
+
         <section id="tab-diagnostica" class="tab-content hidden space-y-6">
             <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-md border border-slate-100 dark:border-slate-700">
                 <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">🧠 Evaluación Diagnóstica de Conocimientos Previos</h2>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">Responde honestamente para conocer tu estado conceptual antes de iniciar el banco de desafíos.</p>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Desplázate por el panel de abajo para completar los 10 desafíos de diagnóstico.</p>
                 
-                <div id="quiz-container" class="space-y-6">
-                    <div class="p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
-                        <p class="font-semibold mb-3 text-sm">1. Si cinco estudiantes tienen las siguientes edades: 14, 14, 15, 16, 26. ¿Cuál es la Mediana?</p>
+                <div class="scroll-container overflow-y-auto max-h-[480px] pr-2 space-y-6 border border-slate-200 dark:border-slate-700 p-4 rounded-xl bg-slate-50 dark:bg-slate-900/40">
+                    
+                    <div class="p-4 bg-white dark:bg-slate-800 rounded-xl shadow-sm">
+                        <p class="font-semibold text-sm mb-3">1. Si cinco estudiantes tienen las siguientes edades: 14, 14, 15, 16, 26. ¿Cuál es la Mediana?</p>
                         <div class="space-y-2 text-xs">
-                            <label class="flex items-center space-x-2 p-2 bg-white dark:bg-slate-800 rounded-lg cursor-pointer hover:bg-slate-100"><input type="radio" name="q1" value="14"> <span>14</span></label>
-                            <label class="flex items-center space-x-2 p-2 bg-white dark:bg-slate-800 rounded-lg cursor-pointer hover:bg-slate-100"><input type="radio" name="q1" value="15"> <span>15 (Correcto, es el valor del centro)</span></label>
-                            <label class="flex items-center space-x-2 p-2 bg-white dark:bg-slate-800 rounded-lg cursor-pointer hover:bg-slate-100"><input type="radio" name="q1" value="17"> <span>17</span></label>
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q1" value="14"> <span>14</span></label>
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q1" value="15"> <span>15 (Valor central ordenado)</span></label>
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q1" value="17"> <span>17</span></label>
                         </div>
                     </div>
 
-                    <div class="p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
-                        <p class="font-semibold mb-3 text-sm">2. En el ejemplo anterior, la edad "26" es un valor atípico muy alto. ¿Qué medida se verá más afectada o sesgada?</p>
+                    <div class="p-4 bg-white dark:bg-slate-800 rounded-xl shadow-sm">
+                        <p class="font-semibold text-sm mb-3">2. En el ejemplo anterior, la edad "26" es un valor atípico muy alto. ¿Qué medida se verá más afectada o sesgada?</p>
                         <div class="space-y-2 text-xs">
-                            <label class="flex items-center space-x-2 p-2 bg-white dark:bg-slate-800 rounded-lg cursor-pointer hover:bg-slate-100"><input type="radio" name="q2" value="media"> <span>La Media Aritmética</span></label>
-                            <label class="flex items-center space-x-2 p-2 bg-white dark:bg-slate-800 rounded-lg cursor-pointer hover:bg-slate-100"><input type="radio" name="q2" value="mediana"> <span>La Mediana</span></label>
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q2" value="media"> <span>La Media Aritmética</span></label>
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q2" value="mediana"> <span>La Mediana</span></label>
                         </div>
                     </div>
 
-                    <button onclick="calificarQuiz()" class="w-full bg-[#0076c0] hover:bg-[#005c96] text-white font-bold py-3 px-6 rounded-xl transition shadow-md text-sm">
-                        Análisis de Respuestas
-                    </button>
+                    <div class="p-4 bg-white dark:bg-slate-800 rounded-xl shadow-sm">
+                        <p class="font-semibold text-sm mb-3">3. ¿Qué mide primordialmente la Desviación Estándar en un censo escolar?</p>
+                        <div class="space-y-2 text-xs">
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q3" value="a"> <span>El centro absoluto</span></label>
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q3" value="correct"> <span>La distancia típica de los datos respecto a la media</span></label>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-white dark:bg-slate-800 rounded-xl shadow-sm">
+                        <p class="font-semibold text-sm mb-3">4. Si el rango de las notas de un salón es 0, significa que:</p>
+                        <div class="space-y-2 text-xs">
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q4" value="correct"> <span>Todos los alumnos obtuvieron exactamente la misma nota</span></label>
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q4" value="b"> <span>Hubo mucha dispersión de notas</span></label>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-white dark:bg-slate-800 rounded-xl shadow-sm">
+                        <p class="font-semibold text-sm mb-3">5. La mediana de una lista ordenada siempre representa el percentil:</p>
+                        <div class="space-y-2 text-xs">
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q5" value="correct"> <span>Percentil 50</span></label>
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q5" value="b"> <span>Percentil 100</span></label>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-white dark:bg-slate-800 rounded-xl shadow-sm">
+                        <p class="font-semibold text-sm mb-3">6. ¿Cuál de las siguientes medidas es inmune a cambios bruscos en un solo extremo?</p>
+                        <div class="space-y-2 text-xs">
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q6" value="correct"> <span>La Mediana</span></label>
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q6" value="b"> <span>La Media</span></label>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-white dark:bg-slate-800 rounded-xl shadow-sm">
+                        <p class="font-semibold text-sm mb-3">7. Si sumamos un valor constante a todos los datos de una muestra, la desviación estándar:</p>
+                        <div class="space-y-2 text-xs">
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q7" value="correct"> <span>Se mantiene idéntica</span></label>
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q7" value="b"> <span>Aumenta proporcionalmente</span></label>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-white dark:bg-slate-800 rounded-xl shadow-sm">
+                        <p class="font-semibold text-sm mb-3">8. Si un conjunto de datos es bimodal, significa que posee:</p>
+                        <div class="space-y-2 text-xs">
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q8" value="correct"> <span>Dos valores que comparten la máxima frecuencia absoluta</span></label>
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q8" value="b"> <span>Dos medias aritméticas</span></label>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-white dark:bg-slate-800 rounded-xl shadow-sm">
+                        <p class="font-semibold text-sm mb-3">9. El valor de la varianza siempre se expresa en unidades:</p>
+                        <div class="space-y-2 text-xs">
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q9" value="correct"> <span>Al cuadrado ($x^2$)</span></label>
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q9" value="b"> <span>Lineales simples</span></label>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-white dark:bg-slate-800 rounded-xl shadow-sm">
+                        <p class="font-semibold text-sm mb-3">10. ¿Es correcto afirmar que la media aritmética siempre pertenece al conjunto original de datos?</p>
+                        <div class="space-y-2 text-xs">
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q10" value="a"> <span>Sí, siempre</span></label>
+                            <label class="flex items-center space-x-2 p-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700"><input type="radio" name="q10" value="correct"> <span>No, puede ser un valor decimal inexistente en la lista</span></label>
+                        </div>
+                    </div>
+
                 </div>
+
+                <button onclick="calificarQuizCompleto()" class="w-full mt-4 bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-6 rounded-xl transition shadow-md text-sm">
+                    📩 Enviar las 10 Respuestas y Obtener Retroalimentación Global
+                </button>
+                
                 <div id="quiz-result" class="mt-4 hidden p-4 rounded-xl font-bold text-center text-sm"></div>
             </div>
         </section>
 
+
         <section id="tab-actividades" class="tab-content hidden space-y-6">
             <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-md border border-slate-100 dark:border-slate-700">
-                <h2 class="text-xl font-bold text-[#005c96] dark:text-primary-300 mb-2">🎮 Zona del Diseñador: Banco de Actividades</h2>
-                <p class="text-xs text-slate-600 dark:text-slate-300">
-                    Contenedor interactivo estructurado. Listo para desplegar las simulaciones dinámicas y acertijos de objetos móviles en el siguiente paso de desarrollo.
+                <h2 class="text-2xl font-bold text-primary-700 dark:text-primary-300 mb-2">🎮 Zona del Diseñador: Banco de 5 Actividades del DBA</h2>
+                <p class="text-slate-600 dark:text-slate-300 mb-4 text-xs">
+                    Selecciona una simulación para abrir de forma limpia su entorno interactivo independiente en el navegador.
                 </p>
-                <div class="mt-6 p-10 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl text-center bg-slate-50 dark:bg-slate-800">
-                    <p class="text-sm font-medium text-slate-400">
-                        [Estructura limpia preparada para inyección de simuladores lógico-matemáticos]
-                    </p>
+
+                <div class="space-y-12">
+                    
+                    <div id="act-env-1" class="border border-slate-200 dark:border-slate-700 rounded-2xl p-4 bg-slate-50 dark:bg-slate-900/20 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                        <div class="space-y-3">
+                            <span class="bg-blue-600 text-white font-bold px-2.5 py-1 rounded text-[10px] uppercase">Actividad 1: El Centro del Laberinto</span>
+                            <p class="text-xs leading-relaxed text-slate-700 dark:text-slate-300">
+                                <strong>Problema:</strong> Un grupo de investigadores mide los minutos que tardan 6 estudiantes en resolver un enigma lógico. Los tiempos son: 10, 12, 12, 14, 15 y 47 minutos. El último estudiante se distrajo por completo. ¿Cuál de las medidas de tendencia central describe de forma real el rendimiento típico del grupo sin verse afectada por la distracción extrema?
+                            </p>
+                            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
+                                <label class="block text-xs font-semibold">Introduce el valor numérico de la Mediana calculada:</label>
+                                <input type="number" id="act1-ans" class="w-full p-2 border rounded text-xs dark:bg-slate-700" placeholder="Ej. 13">
+                                <button onclick="checkAct1()" class="bg-primary-600 text-white font-bold px-3 py-1.5 rounded text-xs mt-2 w-full">Validar Respuestas e Interacción</button>
+                                <p id="feedback-1" class="text-xs font-bold mt-1 hidden"></p>
+                            </div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border flex flex-col items-center">
+                            <span class="text-xs font-bold mb-2 text-slate-500">Gráfica Interactiva de Tiempos</span>
+                            <svg class="w-full max-h-32" viewBox="0 0 200 100">
+                                <rect x="10" y="60" width="15" height="40" fill="#0284c7" />
+                                <rect x="35" y="52" width="15" height="48" fill="#0284c7" />
+                                <rect x="60" y="52" width="15" height="48" fill="#0284c7" />
+                                <rect x="85" y="44" width="15" height="56" fill="#0284c7" />
+                                <rect x="110" y="40" width="15" height="60" fill="#0284c7" />
+                                <rect x="135" y="10" width="15" height="90" fill="#ef4444" />
+                                <line x1="0" y1="48" x2="200" y2="48" stroke="#e11d48" stroke-width="1.5" stroke-dasharray="3 3"/>
+                                <text x="5" y="42" fill="#e11d48" font-size="8" font-weight="bold">Línea de la Mediana = 13</text>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div id="act-env-2" class="border border-slate-200 dark:border-slate-700 rounded-2xl p-4 bg-slate-50 dark:bg-slate-900/20 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                        <div class="space-y-3">
+                            <span class="bg-purple-600 text-white font-bold px-2.5 py-1 rounded text-[10px] uppercase">Actividad 2: Cazadores de Sesgo</span>
+                            <p class="text-xs leading-relaxed text-slate-700 dark:text-slate-300">
+                                <strong>Problema:</strong> En una fábrica se empacan bolsas de azúcar de 1000g. Un lote reporta pesos de: 950g, 1000g, 1000g, 1005g y 1050g. Mueve el objeto deslizante de abajo para simular cómo cambia la Media Aritmética cuando agregamos un error crítico de empaque de un objeto móvil atípico de 1400g.
+                            </p>
+                            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
+                                <label class="block text-xs font-semibold text-purple-600">Mueve el deslizador del Objeto Atípico:</label>
+                                <input type="range" id="act2-slider" min="1000" max="1500" value="1000" oninput="updateAct2Chart(this.value)" class="w-full cursor-pointer">
+                                <p class="text-[11px] font-medium">Peso Atípico Actual: <span id="act2-val" class="font-bold text-purple-600">1000g</span></p>
+                                <p class="text-[11px] font-medium">Nueva Media del Salón: <span id="act2-media-calc" class="font-bold text-blue-600">1001g</span></p>
+                                <button onclick="checkAct2()" class="bg-purple-600 text-white font-bold px-3 py-1.5 rounded text-xs mt-1 w-full">Analizar Impacto Estructural</button>
+                                <p id="feedback-2-text" class="text-xs font-bold mt-1 hidden"></p>
+                            </div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border flex flex-col items-center justify-center">
+                            <span class="text-xs font-bold mb-2 text-slate-500">Visualizador de Sesgo Dinámico</span>
+                            <div class="w-full bg-slate-100 dark:bg-slate-700 h-24 rounded-lg relative flex items-center">
+                                <div id="act2-balance" class="absolute w-4 h-4 bg-red-500 rounded-full transition-all" style="left: 50%;"></div>
+                                <div class="w-full border-b border-dashed border-slate-400 absolute"></div>
+                            </div>
+                            <span class="text-[10px] text-slate-400 mt-2">La bola roja simula el desbalance del centro numérico de la muestra.</span>
+                        </div>
+                    </div>
+
+                    <div id="act-env-3" class="border border-slate-200 dark:border-slate-700 rounded-2xl p-4 bg-slate-50 dark:bg-slate-900/20 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                        <div class="space-y-3">
+                            <span class="bg-emerald-600 text-white font-bold px-2.5 py-1 rounded text-[10px] uppercase">Actividad 3: Simulador de Dispersión</span>
+                            <p class="text-xs leading-relaxed text-slate-700 dark:text-slate-300">
+                                <strong>Problema:</strong> Dos atletas registran sus tiempos en segundos para 4 carreras. Atleta A: [10, 10, 10, 10]. Atleta B: [8, 9, 11, 12]. Ambos poseen la misma media de 10 segundos, pero su consistencia es radicalmente distinta. Llena los espacios para evaluar la variabilidad.
+                            </p>
+                            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
+                                <label class="block text-xs font-semibold">¿Cuál es el Rango numérico exacto del Atleta B?</label>
+                                <input type="number" id="act3-ans" class="w-full p-2 border rounded text-xs dark:bg-slate-700" placeholder="Dato mayor menos dato menor">
+                                <button onclick="checkAct3()" class="bg-emerald-600 text-white font-bold px-3 py-1.5 rounded text-xs mt-2 w-full">Calcular Consistencia de Datos</button>
+                                <p id="feedback-3" class="text-xs font-bold mt-1 hidden"></p>
+                            </div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border flex flex-col items-center">
+                            <span class="text-xs font-bold mb-2 text-slate-500">Gráfica de Estabilidad (Dispersión)</span>
+                            <div class="flex gap-4 justify-center items-end h-24 w-full">
+                                <div class="w-12 bg-blue-400 h-20 text-center text-[10px] text-white font-bold pt-2">A (R=0)</div>
+                                <div class="w-12 bg-emerald-400 h-12 text-center text-[10px] text-white font-bold pt-2">B (R=4)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="act-env-4" class="border border-slate-200 dark:border-slate-700 rounded-2xl p-4 bg-slate-50 dark:bg-slate-900/20 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                        <div class="space-y-3">
+                            <span class="bg-amber-600 text-white font-bold px-2.5 py-1 rounded text-[10px] uppercase">Actividad 4: Desafío de Frecuencias y Mediana</span>
+                            <p class="text-xs leading-relaxed text-slate-700 dark:text-slate-300">
+                                <strong>Problema:</strong> Un docente registra la cantidad de libros leídos por sus estudiantes en el trimestre mediante una tabla de frecuencias agrupadas. Completa el valor que falta en la celda de frecuencia acumulada de la tabla interactiva de la derecha.
+                            </p>
+                            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
+                                <label class="block text-xs font-semibold">Introduce el valor que falta en la celda amarilla ($F_i$):</label>
+                                <input type="number" id="act4-ans" class="w-full p-2 border rounded text-xs dark:bg-slate-700" placeholder="Ej. 12">
+                                <button onclick="checkAct4()" class="bg-amber-600 text-white font-bold px-3 py-1.5 rounded text-xs mt-2 w-full">Comprobar Tabla Inclusiva</button>
+                                <p id="feedback-4" class="text-xs font-bold mt-1 hidden"></p>
+                            </div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-800 p-2 rounded-xl shadow-sm border overflow-x-auto w-full">
+                            <table class="w-full text-center text-[11px] border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-100 dark:bg-slate-700">
+                                        <th class="p-1 border">Libros ($X_i$)</th>
+                                        <th class="p-1 border">Alumnos ($f_i$)</th>
+                                        <th class="p-1 border">Acumulada ($F_i$)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="p-1 border">1 - 3 libros</td>
+                                        <td class="p-1 border">4</td>
+                                        <td class="p-1 border">4</td>
+                                    </tr>
+                                    <tr class="bg-amber-50 dark:bg-amber-900/20">
+                                        <td class="p-1 border">4 - 6 libros</td>
+                                        <td class="p-1 border">8</td>
+                                        <td class="p-1 border font-bold text-amber-600">❓ (Falta)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="act-env-5" class="border border-slate-200 dark:border-slate-700 rounded-2xl p-4 bg-slate-50 dark:bg-slate-900/20 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                        <div class="space-y-3">
+                            <span class="bg-pink-600 text-white font-bold px-2.5 py-1 rounded text-[10px] uppercase">Actividad 5: Co-relación Extrema de Datos</span>
+                            <p class="text-xs leading-relaxed text-slate-700 dark:text-slate-300">
+                                <strong>Problema:</strong> Se analiza la relación entre las horas de estudio semanales y la varianza de las calificaciones obtenidas. A mayor consistencia en el estudio, la dispersión tiende a reducirse a cero de forma inversamente proporcional. ¿Cómo se define matemáticamente esta interacción?
+                            </p>
+                            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
+                                <label class="block text-xs font-semibold">Selecciona la conclusión científica correcta:</label>
+                                <select id="act5-ans" class="w-full p-2 border rounded text-xs dark:bg-slate-700">
+                                    <option value="">Selecciona una deducción...</option>
+                                    <option value="wrong">A más horas de estudio, mayor variabilidad desordenada</option>
+                                    <option value="correct">A más horas de estudio estable, menor es la varianza (mayor homogeneidad)</option>
+                                </select>
+                                <button onclick="checkAct5()" class="bg-pink-600 text-white font-bold px-3 py-1.5 rounded text-xs mt-2 w-full">Enviar Informe Final</button>
+                                <p id="feedback-5" class="text-xs font-bold mt-1 hidden"></p>
+                            </div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border flex flex-col items-center">
+                            <span class="text-xs font-bold mb-2 text-slate-500">Diagrama de Dispersión Limpio</span>
+                            <svg class="w-full max-h-32" viewBox="0 0 200 100">
+                                <circle cx="20" cy="80" r="3" fill="#db2777"/>
+                                <circle cx="50" cy="65" r="3" fill="#db2777"/>
+                                <circle cx="90" cy="40" r="3" fill="#db2777"/>
+                                <circle cx="140" cy="20" r="3" fill="#db2777"/>
+                                <line x1="10" y1="90" x2="160" y2="10" stroke="#94a3b8" stroke-width="1"/>
+                            </svg>
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
         </section>
+
 
         <section id="tab-encuesta" class="tab-content hidden space-y-6">
             <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-md border border-slate-100 dark:border-slate-700">
                 <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">⭐ Encuesta de Valoración y Co-evaluación</h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Completa el formulario deslizable compuesto por 10 métricas de usabilidad inclusiva.</p>
+                
                 <form id="survey-form" class="space-y-4" onsubmit="saveSurvey(event)">
-                    <div>
-                        <label class="block text-xs font-semibold mb-2">¿Cómo calificas la usabilidad pedagógica del sitio?</label>
-                        <select class="w-full p-2 text-xs rounded-lg border bg-white dark:bg-slate-700 border-slate-300" required>
-                            <option value="">Selecciona...</option>
-                            <option value="5">5 - Excelente</option>
-                            <option value="4">4 - Buena</option>
-                        </select>
+                    
+                    <div class="scroll-container overflow-y-auto max-h-[400px] pr-2 space-y-4 border border-slate-200 dark:border-slate-700 p-4 rounded-xl bg-slate-50 dark:bg-slate-900/40 text-xs">
+                        
+                        <div>
+                            <label class="block font-semibold mb-1">1. ¿Cómo calificas el diseño inclusivo y la legibilidad de la fuente?</label>
+                            <select class="w-full p-2 rounded border bg-white dark:bg-slate-700 border-slate-300" required>
+                                <option value="5">5 - Excelente visibilidad</option>
+                                <option value="4">4 - Buena</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold mb-1">2. ¿Las animaciones dinámicas facilitaron el aprendizaje de los DBA?</label>
+                            <select class="w-full p-2 rounded border bg-white dark:bg-slate-700 border-slate-300" required>
+                                <option value="5">5 - Muy didácticas</option>
+                                <option value="4">4 - Adecuadas</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold mb-1">3. ¿La velocidad de las interacciones en tiempo real fue óptima?</label>
+                            <select class="w-full p-2 rounded border bg-white dark:bg-slate-700 border-slate-300" required>
+                                <option value="5">5 - Instantánea y rápida</option>
+                                <option value="4">4 - Aceptable</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold mb-1">4. ¿El nivel matemático de los desafíos se ajusta a Grado 10°?</label>
+                            <select class="w-full p-2 rounded border bg-white dark:bg-slate-700 border-slate-300" required>
+                                <option value="5">5 - Perfectamente alineado</option>
+                                <option value="4">4 - Apropiado</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold mb-1">5. ¿El panel de contraste alto (Modo Oscuro) funciona correctamente?</label>
+                            <select class="w-full p-2 rounded border bg-white dark:bg-slate-700 border-slate-300" required>
+                                <option value="5">5 - Excelente contraste</option>
+                                <option value="4">4 - Útil</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold mb-1">6. ¿Los feedbacks de error te ayudaron a corregir tus cálculos?</label>
+                            <select class="w-full p-2 rounded border bg-white dark:bg-slate-700 border-slate-300" required>
+                                <option value="5">5 - Muy claros y constructivos</option>
+                                <option value="4">4 - Básicos</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold mb-1">7. ¿La botonera de navegación superior es intuitiva?</label>
+                            <select class="w-full p-2 rounded border bg-white dark:bg-slate-700 border-slate-300" required>
+                                <option value="5">5 - Altamente intuitiva</option>
+                                <option value="4">4 - Normal</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold mb-1">8. ¿Consideras oportuno el uso de tablas interactivas de frecuencia?</label>
+                            <select class="w-full p-2 rounded border bg-white dark:bg-slate-700 border-slate-300" required>
+                                <option value="5">5 - Sí, aclaran mucho las variables</option>
+                                <option value="4">4 - Indiferente</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold mb-1">9. ¿Recomendarías este software educativo a otros colegios públicos?</label>
+                            <select class="w-full p-2 rounded border bg-white dark:bg-slate-700 border-slate-300" required>
+                                <option value="5">5 - Totalmente recomendado</option>
+                                <option value="4">4 - Probablemente</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold mb-1">10. Calificación global final de la experiencia de usuario:</label>
+                            <select class="w-full p-2 rounded border bg-white dark:bg-slate-700 border-slate-300" required>
+                                <option value="5">⭐⭐⭐⭐⭐ - Impecable</option>
+                                <option value="4">⭐⭐⭐⭐ - Buena</option>
+                            </select>
+                        </div>
+
                     </div>
-                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-lg text-xs transition">
-                        Guardar Valoración
+
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-5 rounded-lg shadow transition text-xs">
+                        Guardar Valoración Localmente
                     </button>
                 </form>
-                <p id="survey-msg" class="text-emerald-600 font-bold hidden text-xs mt-2"></p>
+                <p id="survey-msg" class="text-emerald-600 font-bold hidden text-sm mt-2"></p>
             </div>
         </section>
 
+
         <section id="tab-creditos" class="tab-content hidden space-y-6">
-            <div class="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-md border border-slate-100 dark:border-slate-700 text-center">
-                <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-6">👥 Equipo de Autores Académicos</h2>
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-md border border-slate-100 dark:border-slate-700 text-center">
+                <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-6">👥 Equipo de Autores Académicos</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div class="bg-slate-50 dark:bg-slate-700 p-4 rounded-xl border border-slate-200 dark:border-slate-600">
                         <div class="text-3xl mb-2">👨‍🏫</div>
-                        <h3 class="font-bold text-[#005c96] dark:text-primary-300 text-sm">David Beleño</h3>
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Licenciatura en Matemáticas</p>
+                        <h3 class="font-bold text-primary-700 dark:text-primary-300">David Beleño</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Licenciatura en Matemáticas</p>
                     </div>
                     <div class="bg-slate-50 dark:bg-slate-700 p-4 rounded-xl border border-slate-200 dark:border-slate-600">
                         <div class="text-3xl mb-2">👨‍💻</div>
-                        <h3 class="font-bold text-[#005c96] dark:text-primary-300 text-sm">Jesús De Arco</h3>
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Diseño Curricular y Didáctica</p>
+                        <h3 class="font-bold text-primary-700 dark:text-primary-300">Jesús De Arco</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Diseño Curricular y Didáctica</p>
                     </div>
                     <div class="bg-slate-50 dark:bg-slate-700 p-4 rounded-xl border border-slate-200 dark:border-slate-600">
                         <div class="text-3xl mb-2">📊</div>
-                        <h3 class="font-bold text-[#005c96] dark:text-primary-300 text-sm">Fabián Díaz</h3>
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Evaluación y Estadística</p>
+                        <h3 class="font-bold text-primary-700 dark:text-primary-300">Fabián Díaz</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Evaluación y Estadística</p>
                     </div>
                     <div class="bg-slate-50 dark:bg-slate-700 p-4 rounded-xl border border-slate-200 dark:border-slate-600">
                         <div class="text-3xl mb-2">🚀</div>
-                        <h3 class="font-bold text-[#005c96] dark:text-primary-300 text-sm">Joshua Guadagno</h3>
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Desarrollo e Inclusión Web</p>
+                        <h3 class="font-bold text-primary-700 dark:text-primary-300">Joshua Guadagno</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Desarrollo e Inclusión Web</p>
                     </div>
                 </div>
             </div>
@@ -291,29 +630,37 @@
 
     </main>
 
-    <footer class="bg-white dark:bg-slate-800 text-center py-4 border-t border-slate-200 dark:border-slate-700 transition-colors">
-        <p class="text-xs text-slate-500 dark:text-slate-400">© 2026 - Clas de estadística</p>
+    <footer class="bg-slate-100 dark:bg-slate-800 text-center py-4 border-t border-slate-200 dark:border-slate-700 transition-colors">
+        <p class="text-xs text-slate-500 dark:text-slate-400">© 2026 - Clase de estadística</p>
     </footer>
 
     <script>
-        // Control de Navegación Profesional de Pestañas
-        function openTab(event, tabId) {
-            // Ocultar contenidos
+        // 1. Control de Navegación de Pestañas
+        function openTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            // Mostrar seleccionado
             document.getElementById('tab-' + tabId).classList.remove('hidden');
             
-            // Administrar clases de los botones activos
-            document.querySelectorAll('.tab-btn-custom').forEach(btn => {
-                btn.classList.remove('active-tab');
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-white', 'bg-primary-700');
+                btn.classList.add('border-transparent');
             });
             
-            // Asignar estado activo al elemento que disparó el evento
-            event.currentTarget.classList.add('active-tab');
+            if(event && event.currentTarget) {
+                event.currentTarget.classList.add('border-white', 'bg-primary-700');
+                event.currentTarget.classList.remove('border-transparent');
+            }
         }
 
-        // Accesibilidad - Tamaño de Fuente
-        const fontSizes = ['text-sm', 'text-base', 'text-lg'];
+        // Lógica para abrir las 5 actividades simulando el comportamiento de pestañas independientes
+        function launchActivity(e, id) {
+            e.preventDefault();
+            openTab('actividades');
+            // Hacer scroll hasta el contenedor específico de la actividad seleccionada
+            document.getElementById('act-env-' + id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 2. Control de Accesibilidad - Tamaño de Fuente
+        const fontSizes = ['font-size-normal', 'font-size-medium', 'font-size-large'];
         const sizeLabels = ['1x', '1.2x', '1.5x'];
         let currentSizeIdx = 0;
         
@@ -324,44 +671,113 @@
             document.getElementById('font-level-badge').innerText = sizeLabels[currentSizeIdx];
         });
 
-        // Accesibilidad - Contraste
+        // 3. Control de Accesibilidad - Contraste
         document.getElementById('btn-contrast').addEventListener('click', () => {
             document.documentElement.classList.toggle('dark');
             const isDark = document.documentElement.classList.contains('dark');
             document.getElementById('contrast-icon').innerText = isDark ? '☀️' : '🌙';
         });
 
-        // Evaluación Diagnóstica
-        function calificarQuiz() {
-            const q1 = document.querySelector('input[name="q1"]:checked');
-            const q2 = document.querySelector('input[name="q2"]:checked');
+        // 4. Lógica de Evaluación Diagnóstica de 10 Preguntas
+        function calificarQuizCompleto() {
+            let score = 0;
+            const answers = ['15', 'media', 'correct', 'correct', 'correct', 'correct', 'correct', 'correct', 'correct', 'correct'];
             
-            if (!q1 || !q2) {
-                alert("Por favor, responde todas las preguntas del diagnóstico.");
-                return;
+            for (let i = 1; i <= 10; i++) {
+                const checked = document.querySelector(`input[name="q${i}"]:checked`);
+                if(checked && checked.value === answers[i-1]) {
+                    score++;
+                }
             }
-            
-            let aciertos = 0;
-            if (q1.value === '15') aciertos++;
-            if (q2.value === 'media') aciertos++;
-            
+
             const target = document.getElementById('quiz-result');
             target.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-yellow-100', 'text-yellow-800');
             
-            if (aciertos === 2) {
-                target.innerText = "¡Excelente! 2/2 aciertos. Tienes bases firmes para las actividades.";
+            if (score >= 8) {
+                target.innerText = `¡Espectacular! Has acertado ${score}/10 preguntas. Tu nivel conceptual cumple con los estándares del DBA 9.`;
                 target.classList.add('bg-green-100', 'text-green-800');
             } else {
-                target.innerText = `Resultado: ${aciertos}/2 aciertos. ¡Buen intento! Te sugerimos repasar la Pestaña 1.`;
+                target.innerText = `Resultado: ${score}/10 aciertos. Te sugerimos analizar en detalle el Banco de Actividades Interactivos para repasar.`;
                 target.classList.add('bg-yellow-100', 'text-yellow-800');
             }
         }
 
-        // Guardar Encuesta
+        // CONTROLADORES INTERACTIVOS DE LAS 5 ACTIVIDADES DEL BANCO
+        function checkAct1() {
+            const ans = document.getElementById('act1-ans').value;
+            const fb = document.getElementById('feedback-1');
+            fb.classList.remove('hidden', 'text-green-600', 'text-red-600');
+            if(ans === '13') {
+                fb.innerText = "¡Correcto! La mediana (13) ignora el valor atípico de 47, representando fielmente al grupo.";
+                fb.classList.add('text-green-600');
+            } else {
+                fb.innerText = "Inténtalo de nuevo. Pista: Ordena los datos de forma ascendente y promedia los dos del centro.";
+                fb.classList.add('text-red-600');
+            }
+        }
+
+        function updateAct2Chart(val) {
+            document.getElementById('act2-val').innerText = val + "g";
+            // Calcular media ficticia basada en el slider móvil
+            const baseSum = 950 + 1000 + 1000 + 1005 + 1050;
+            const newMedia = Math.round((baseSum + parseInt(val)) / 6);
+            document.getElementById('act2-media-calc').innerText = newMedia + "g";
+            // Desplazar bola roja para simular interacción de desbalance por sesgo
+            const percent = ((val - 1000) / 500) * 40 + 50;
+            document.getElementById('act2-balance').style.left = percent + "%";
+        }
+
+        function checkAct2() {
+            const fb = document.getElementById('feedback-2-text');
+            fb.classList.remove('hidden');
+            fb.innerText = "¡Simulación Completada! Como observaste, al mover el objeto atípico, la Media cambia drásticamente, demostrando su alta vulnerabilidad al sesgo.";
+            fb.classList.add('text-purple-600');
+        }
+
+        function checkAct3() {
+            const ans = document.getElementById('act3-ans').value;
+            const fb = document.getElementById('feedback-3');
+            fb.classList.remove('hidden', 'text-green-600', 'text-red-600');
+            if(ans === '4') {
+                fb.innerText = "¡Correcto! Rango = 12 - 8 = 4. Esto demuestra que el Atleta B posee mayor dispersión.";
+                fb.classList.add('text-green-600');
+            } else {
+                fb.innerText = "Incorrecto. Resta el tiempo máximo (12) menos el tiempo mínimo (8).";
+                fb.classList.add('text-red-600');
+            }
+        }
+
+        function checkAct4() {
+            const ans = document.getElementById('act4-ans').value;
+            const fb = document.getElementById('feedback-4');
+            fb.classList.remove('hidden', 'text-green-600', 'text-red-600');
+            if(ans === '12') {
+                fb.innerText = "¡Correcto! Frecuencia acumulada = 4 + 8 = 12 alumnos.";
+                fb.classList.add('text-green-600');
+            } else {
+                fb.innerText = "Vuelve a calcular. Suma la frecuencia anterior (4) con la frecuencia actual (8).";
+                fb.classList.add('text-red-600');
+            }
+        }
+
+        function checkAct5() {
+            const ans = document.getElementById('act5-ans').value;
+            const fb = document.getElementById('feedback-5');
+            fb.classList.remove('hidden', 'text-green-600', 'text-red-600');
+            if(ans === 'correct') {
+                fb.innerText = "¡Excelente deducción estadística! A mayor estabilidad en horas de estudio, menor es la variabilidad de las notas.";
+                fb.classList.add('text-green-600');
+            } else {
+                fb.innerText = "Por favor, selecciona una conclusión válida del menú desplegable.";
+                fb.classList.add('text-red-600');
+            }
+        }
+
+        // 5. Guardar Encuesta de 10 Preguntas en LocalStorage
         function saveSurvey(e) {
             e.preventDefault();
             const msg = document.getElementById('survey-msg');
-            msg.innerText = "¡Muchas gracias! Tu opinión se ha guardado localmente.";
+            msg.innerText = "¡Muchas gracias! Tus 10 valoraciones de métricas se han guardado con éxito.";
             msg.classList.remove('hidden');
         }
     </script>
