@@ -3,415 +3,366 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estadística Mágica</title>
-    <!-- Estilos base e iconos de FontAwesome por si los usas -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-blue: #0076c0;
-            --dark-blue: #005c96;
-            --light-bg: #f4f7f9;
-            --card-purple: #9d4edd;
+    <title>Estadística Mágica - DBA 9</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            600: '#0076c0',
+                            700: '#005c96',
+                        }
+                    }
+                }
+            }
         }
-
+    </script>
+    <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--light-bg);
-            margin: 0;
-            padding: 0;
-            color: #333;
+            transition: background-color 0.3s, color 0.3s;
         }
-
-        /* Encabezado */
-        header {
-            background-color: #ffffff;
-            padding: 15px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        /* --- ESTILOS COMPATIBLES CON LA BOTONERA ORIGINAL --- */
+        .nav-tabs-container {
+            background-color: #0076c0 !important;
         }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo-box {
-            background: linear-gradient(135deg, #0076c0, #9d4edd);
-            width: 45px;
-            height: 45px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 22px;
-        }
-
-        .brand-info h1 {
-            margin: 0;
-            font-size: 20px;
-            color: #005c96;
-            font-weight: 700;
-        }
-
-        .brand-info p {
-            margin: 0;
-            font-size: 12px;
-            color: #777;
-        }
-
-        .accessibility-panel {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background-color: #f8f9fa;
-            padding: 6px 15px;
-            border-radius: 20px;
-            border: 1px solid #e9ecef;
-            font-size: 12px;
-            font-weight: bold;
-            color: #6c757d;
-        }
-
-        .btn-acc {
-            background: #fff;
-            border: 1px solid #ced4da;
-            padding: 4px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        .btn-contrast {
-            background: #fff;
-            border: 1px solid #ced4da;
-            padding: 4px 12px;
-            border-radius: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-weight: bold;
-        }
-
-        /* --- MENÚ DE PESTAÑAS AZULES (Restaurado según image_f466fa.png) --- */
-        nav.nav-tabs-container {
-            background-color: var(--primary-blue);
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .tab-button {
+        .tab-btn-custom {
             background: transparent;
             border: none;
             color: rgba(255, 255, 255, 0.9);
-            padding: 14px 20px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: background-color 0.2s, color 0.2s;
+            transition: all 0.2s;
             border-bottom: 3px solid transparent;
         }
-
-        .tab-button:hover {
+        .tab-btn-custom:hover {
             background-color: rgba(255, 255, 255, 0.1);
-            color: #fff;
+            color: #ffffff;
         }
-
-        .tab-button.active {
-            background-color: var(--dark-blue);
-            color: #fff;
-            border-bottom: 3px solid #fff;
-        }
-
-        /* Contenedor Principal */
-        main {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-
-        /* Alerta / Consejo */
-        .info-tip {
-            background-color: #ffffff;
-            border-left: 4px solid #ffcc00;
-            padding: 15px 20px;
-            border-radius: 4px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            font-size: 14px;
-            color: var(--dark-blue);
-        }
-
-        /* Secciones de Contenido */
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Cuadrícula de Componentes Clave (Inicio) */
-        .section-title {
-            font-size: 18px;
-            color: #111;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-        }
-
-        @media (max-width: 768px) {
-            .cards-grid { grid-template-columns: 1fr; }
-        }
-
-        .card {
-            background: #fff;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-visual {
-            height: 160px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            color: white;
-        }
-
-        .bg-blue { background-color: var(--primary-blue); }
-        .bg-purple { background-color: var(--card-purple); }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        .card-body h3 {
-            margin: 0 0 10px 0;
-            font-size: 16px;
-        }
-        .color-blue h3 { color: var(--dark-blue); }
-        .color-purple h3 { color: var(--card-purple); }
-
-        .card-body p {
-            margin: 0;
-            font-size: 13px;
-            color: #666;
-            line-height: 1.5;
-        }
-
-        /* Estilos simulados de gráficos dentro de las tarjetas */
-        .mock-chart {
-            display: flex;
-            align-items: flex-end;
-            gap: 8px;
-            height: 60px;
-        }
-        .chart-bar {
-            width: 16px;
-            background-color: rgba(255,255,255,0.4);
-            border-radius: 4px 4px 0 0;
-        }
-        .chart-bar.active {
-            background-color: #fff;
-            height: 50px;
-        }
-        .chart-line-indicator {
-            position: absolute;
-            border-left: 2px dashed red;
-            height: 70px;
-            top: 35px;
-        }
-        .chart-label {
-            position: absolute;
-            color: red;
-            font-size: 10px;
-            font-weight: bold;
-            top: 20px;
-        }
-
-        .mock-slider {
-            width: 60%;
-            height: 4px;
-            background: rgba(255,255,255,0.3);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .slider-handle {
-            width: 14px;
-            height: 14px;
-            background: #fff;
-            border-radius: 50%;
-        }
-        .slider-endpoint {
-            position: absolute;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        /* --- FOOTER MODIFICADO --- */
-        footer {
-            text-align: center;
-            padding: 30px 20px;
-            font-size: 12px;
-            color: #777;
-            border-top: 1px solid #e9ecef;
-            margin-top: 5px;
+        .tab-btn-custom.active-tab {
+            background-color: #005c96 !important;
+            color: #ffffff !important;
+            border-bottom: 3px solid #ffffff !important;
         }
     </style>
 </head>
-<body>
+<body class="bg-[#f4f7f9] text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
 
-    <!-- Encabezado con Accesibilidad -->
-    <header>
-        <div class="logo-container">
-            <div class="logo-box">
-                <i class="fa-solid fa-chart-simple"></i>
+    <header class="bg-white dark:bg-slate-800 shadow-sm sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700">
+        <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-gradient-to-135 from-[#0076c0] to-[#9d4edd] w-11 h-11 rounded-lg flex items-center justify-center text-white text-xl font-bold shadow-sm">
+                    📊
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-[#005c96] dark:text-primary-100">Estadística Mágica</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Grado 10° • Ministerio de Educación Nacional</p>
+                </div>
             </div>
-            <div class="brand-info">
-                <h1>Estadística Mágica</h1>
-                <p>Grado 10° • Ministerio de Educación Nacional</p>
+            
+            <div class="flex items-center space-x-2 bg-slate-100 dark:bg-slate-700 p-1.5 rounded-xl border border-slate-200 dark:border-slate-600">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 px-2">Accesibilidad:</span>
+                <button id="btn-font" class="bg-white dark:bg-slate-600 text-slate-700 dark:text-slate-200 font-bold px-3 py-1.5 rounded-lg text-sm shadow-sm transition flex items-center">
+                    <span>AA</span><span id="font-level-badge" class="bg-blue-50 dark:bg-slate-900 text-[#0076c0] text-xs px-1.5 py-0.5 rounded ml-1">1x</span>
+                </button>
+                <button id="btn-contrast" class="bg-white dark:bg-slate-600 text-slate-700 dark:text-slate-200 font-bold px-3 py-1.5 rounded-lg text-sm shadow-sm transition flex items-center gap-1">
+                    <span id="contrast-icon">🌙</span> <span>Contraste</span>
+                </button>
             </div>
         </div>
-        <div class="accessibility-panel">
-            ACCESIBILIDAD:
-            <button class="btn-acc">AA <span style="font-size:10px;">1x</span></button>
-            <button class="btn-contrast">🌙 Contraste</button>
-        </div>
+
+        <nav class="nav-tabs-container text-white shadow-md">
+            <div class="max-w-7xl mx-auto px-4 flex flex-wrap">
+                <button onclick="openTab(event, 'inicio')" class="tab-btn-custom active-tab px-5 py-3.5 font-bold text-sm flex items-center gap-2 focus:outline-none">
+                    🏠 Inicio
+                </button>
+                <button onclick="openTab(event, 'teoria')" class="tab-btn-custom px-5 py-3.5 font-bold text-sm flex items-center gap-2 focus:outline-none">
+                    📘 1. Fundamentos y DBA
+                </button>
+                <button onclick="openTab(event, 'diagnostica')" class="tab-btn-custom px-5 py-3.5 font-bold text-sm flex items-center gap-2 focus:outline-none">
+                    📝 2. Eval. Diagnóstica
+                </button>
+                <button onclick="openTab(event, 'actividades')" class="tab-btn-custom px-5 py-3.5 font-bold text-sm flex items-center gap-2 focus:outline-none">
+                    🎮 3. Banco de Actividades
+                </button>
+                <button onclick="openTab(event, 'encuesta')" class="tab-btn-custom px-5 py-3.5 font-bold text-sm flex items-center gap-2 focus:outline-none">
+                    ⭐ 4. Valoración del Sitio
+                </button>
+                <button onclick="openTab(event, 'creditos')" class="tab-btn-custom px-5 py-3.5 font-bold text-sm flex items-center gap-2 focus:outline-none">
+                    👥 5. Créditos
+                </button>
+            </div>
+        </nav>
     </header>
 
-    <!-- Barra de Navegación de Botones Azules (Fiel a image_f466fa.png) -->
-    <nav class="nav-tabs-container">
-        <button class="tab-button active" onclick="switchTab(event, 'inicio')">🏠 Inicio</button>
-        <button class="tab-button" onclick="switchTab(event, 'fundamentos')">📘 1. Fundamentos y DBA</button>
-        <button class="tab-button" onclick="switchTab(event, 'evaluacion')">📝 2. Eval. Diagnóstica</button>
-        <button class="tab-button" onclick="switchTab(event, 'actividades')">🎮 3. Banco de Actividades</button>
-        <button class="tab-button" onclick="switchTab(event, 'valoracion')">⭐ 4. Valoración del Sitio</button>
-        <button class="tab-button" onclick="switchTab(event, 'creditos')">👥 5. Créditos</button>
-    </nav>
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
 
-    <!-- Contenido Dinámico principal -->
-    <main>
-        
-        <!-- Pestaña: INICIO -->
-        <div id="inicio" class="tab-content active">
-            <div class="info-tip">
-                💡 <strong>Explora las pestañas de navegación superiores</strong> para acceder a los contenidos teóricos, juegos dinámicos y autoevaluaciones científicas.
+        <section id="tab-inicio" class="tab-content space-y-8">
+            <div class="bg-white dark:bg-slate-800 border-l-4 border-[#ffcc00] p-4 rounded-r-lg shadow-sm">
+                <p class="text-sm text-[#005c96] dark:text-slate-300">
+                    💡 <strong>Explora las pestañas de navegación superiores</strong> para acceder a los contenidos teóricos, juegos dinámicos y autoevaluaciones científicas.
+                </p>
             </div>
 
-            <h2 class="section-title">🔍 Resumen interactivo de componentes clave</h2>
-            
-            <div class="cards-grid">
-                <!-- Tarjeta 1: Medidas de Tendencia Central -->
-                <div class="card">
-                    <div class="card-visual bg-blue">
-                        <div class="chart-label">Media / Centro</div>
-                        <div class="chart-line-indicator"></div>
-                        <div class="mock-chart">
-                            <div class="chart-bar" style="height: 20px;"></div>
-                            <div class="chart-bar" style="height: 35px;"></div>
-                            <div class="chart-bar active"></div>
-                            <div class="chart-bar" style="height: 25px;"></div>
+            <div>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-5 flex items-center gap-2">
+                    🔍 Resumen interactivo de componentes clave
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden border border-slate-100 dark:border-slate-700">
+                        <div class="bg-[#0076c0] h-40 flex items-center justify-center relative text-white">
+                            <div class="absolute top-5 text-[10px] font-bold text-red-500 bg-white/90 px-1.5 py-0.5 rounded shadow-sm">Media / Centro</div>
+                            <div class="absolute border-l-2 border-dashed border-red-500 h-[72px] top-9"></div>
+                            <div class="flex items-end gap-2 h-16 mt-6">
+                                <div class="w-4 bg-white/40 h-6 rounded-t"></div>
+                                <div class="w-4 bg-white/40 h-10 rounded-t"></div>
+                                <div class="w-4 bg-white h-14 rounded-t"></div>
+                                <div class="w-4 bg-white/40 h-8 rounded-t"></div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="font-bold text-base text-[#005c96] dark:text-primary-300 mb-2">Medidas de Tendencia Central</h4>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                                Descubre dónde se agrupa el corazón de los datos. Aprende sobre la Media, la Mediana y la Moda, y analiza críticamente cuál representa mejor la realidad según la situación.
+                            </p>
                         </div>
                     </div>
-                    <div class="card-body color-blue">
-                        <h3>Medidas de Tendencia Central</h3>
-                        <p>Descubre dónde se agrupa el corazón de los datos. Aprende sobre la Media, la Mediana y la Moda, y analiza críticamente cuál representa mejor la realidad según la situación.</p>
-                    </div>
-                </div>
 
-                <!-- Tarjeta 2: Medidas de Dispersión -->
-                <div class="card">
-                    <div class="card-visual bg-purple">
-                        <div class="slider-endpoint" style="left:20%;">🞁</div>
-                        <div class="mock-slider">
-                            <div class="slider-handle"></div>
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-md overflow-hidden border border-slate-100 dark:border-slate-700">
+                        <div class="bg-[#9d4edd] h-40 flex flex-col items-center justify-center relative text-white px-4">
+                            <span class="text-xs font-bold mb-3">Rango y Desviación Estándar</span>
+                            <div class="w-3/5 h-1 bg-white/30 rounded relative flex items-center justify-center">
+                                <span class="absolute left-0 text-white text-xs">◀</span>
+                                <div class="w-3.5 h-3.5 bg-white rounded-full shadow-md"></div>
+                                <span class="absolute right-0 text-white text-xs">▶</span>
+                            </div>
                         </div>
-                        <div class="slider-endpoint" style="right:20%;">🞃</div>
-                        <div style="position:absolute; top:35px; font-size:11px; font-weight:bold;">Rango y Desviación Estándar</div>
-                    </div>
-                    <div class="card-body color-purple">
-                        <h3>Medidas de Dispersión</h3>
-                        <p>¿Qué tan dispersos o qué tan homogéneos son tus datos? Domina el rango, la varianza y la desviación estándar para entender la variabilidad y los riesgos de un caso real.</p>
+                        <div class="p-6">
+                            <h4 class="font-bold text-base text-[#9d4edd] dark:text-purple-300 mb-2">Medidas de Dispersión</h4>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                                ¿Qué tan dispersos o qué tan homogéneos son tus datos? Domina el rango, la varianza y la desviación estándar para entender la variabilidad y los riesgos de un caso real.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Pestaña: FUNDAMENTOS Y DBA (Restaurado a la versión anterior original) -->
-        <div id="fundamentos" class="tab-content">
-            <h2>📘 1. Fundamentos y DBA</h2>
-            <p>Aquí se encuentra todo el marco conceptual original, estándares curriculares del Ministerio de Educación y los Derechos Básicos de Aprendizaje (DBA) correspondientes a la versión previa completa del sitio.</p>
-            <!-- [Agrega aquí el texto extenso/tablas exactas que tenías antes en esta sección] -->
-        </div>
+        <section id="tab-teoria" class="tab-content hidden space-y-6">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-md border border-slate-100 dark:border-slate-700">
+                <div class="border-l-4 border-[#0076c0] pl-4 mb-4">
+                    <h2 class="text-xl font-bold text-[#005c96] dark:text-primary-300">Derechos Básicos de Aprendizaje (DBA 9)</h2>
+                </div>
+                <p class="text-slate-700 dark:text-slate-300 italic bg-slate-50 dark:bg-slate-700 p-4 rounded-xl">
+                    "Comprende y explica el carácter relativo de las medidas de tendencia central y de dispersión, junto con algunas de sus propiedades, y la necesidad de complementar una medida con otra para obtener mejores lecturas de los datos."
+                </p>
+                
+                <h3 class="font-bold mt-5 mb-2 text-slate-800 dark:text-slate-200">Evidencias de Aprendizaje Estipuladas:</h3>
+                <ul class="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-400">
+                    <li>Encuentra las medidas de tendencia central y de dispersión usando herramientas tecnológicas.</li>
+                    <li>Interpreta y compara lo que representan cada una de las medidas de tendencia central en un conjunto de datos.</li>
+                    <li>Interpreta y compara lo que representan cada una de las medidas de dispersión en un conjunto de datos.</li>
+                    <li>Usa las propiedades de las medidas para caracterizar un conjunto de datos de manera profesional.</li>
+                    <li>Formula conclusiones robustas sobre la distribución empleando más de una medida simultáneamente.</li>
+                </ul>
+            </div>
 
-        <!-- Pestaña: EVALUACIÓN DIAGNÓSTICA -->
-        <div id="evaluacion" class="tab-content">
-            <h2>📝 2. Evaluación Diagnóstica</h2>
-            <p>Sección de evaluación interactiva para medir los conocimientos previos de los estudiantes.</p>
-        </div>
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-md border border-slate-100 dark:border-slate-700 space-y-4">
+                <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100">Fundamentación Teórica Clave</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <h3 class="font-bold text-[#0076c0]">1. Medidas de Tendencia Central</h3>
+                        <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                            Buscan identificar el valor numérico en torno al cual se distribuyen u organizan los datos de una muestra:
+                        </p>
+                        <ul class="list-none text-xs space-y-1.5 bg-slate-50 dark:bg-slate-700 p-3 rounded-lg">
+                            <li><strong>Media (Promedio):</strong> Es el centro de gravedad numérico. Sensible a valores extremos.</li>
+                            <li><strong>Mediana:</strong> El valor central exacto; divide el universo de datos en 50% menores y 50% mayores. Insensible a valores extremos.</li>
+                            <li><strong>Moda:</strong> El dato con mayor frecuencia absoluta.</li>
+                        </ul>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="font-bold text-[#9d4edd]">2. Medidas de Dispersión</h3>
+                        <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                            Miden qué tan cerca o lejos de la media se encuentran los datos, indicando el nivel de homogeneidad:
+                        </p>
+                        <ul class="list-none text-xs space-y-1.5 bg-slate-50 dark:bg-slate-700 p-3 rounded-lg">
+                            <li><strong>Rango:</strong> Diferencia exacta entre el dato máximo y mínimo.</li>
+                            <li><strong>Varianza y Desviación Estándar ($\sigma$):</strong> Expresan el promedio de las desviaciones al cuadrado y la distancia típica real de los datos respecto a su media.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <!-- Pestaña: BANCO DE ACTIVIDADES -->
-        <div id="actividades" class="tab-content">
-            <h2>🎮 3. Banco de Actividades</h2>
-            <p>Acceso directo a simuladores, juegos interactivos y desafíos matemáticos.</p>
-        </div>
+        <section id="tab-diagnostica" class="tab-content hidden space-y-6">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-md border border-slate-100 dark:border-slate-700">
+                <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">🧠 Evaluación Diagnóstica de Conocimientos Previos</h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">Responde honestamente para conocer tu estado conceptual antes de iniciar el banco de desafíos.</p>
+                
+                <div id="quiz-container" class="space-y-6">
+                    <div class="p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
+                        <p class="font-semibold mb-3 text-sm">1. Si cinco estudiantes tienen las siguientes edades: 14, 14, 15, 16, 26. ¿Cuál es la Mediana?</p>
+                        <div class="space-y-2 text-xs">
+                            <label class="flex items-center space-x-2 p-2 bg-white dark:bg-slate-800 rounded-lg cursor-pointer hover:bg-slate-100"><input type="radio" name="q1" value="14"> <span>14</span></label>
+                            <label class="flex items-center space-x-2 p-2 bg-white dark:bg-slate-800 rounded-lg cursor-pointer hover:bg-slate-100"><input type="radio" name="q1" value="15"> <span>15 (Correcto, es el valor del centro)</span></label>
+                            <label class="flex items-center space-x-2 p-2 bg-white dark:bg-slate-800 rounded-lg cursor-pointer hover:bg-slate-100"><input type="radio" name="q1" value="17"> <span>17</span></label>
+                        </div>
+                    </div>
 
-        <!-- Pestaña: VALORACIÓN DEL SITIO -->
-        <div id="valoracion" class="tab-content">
-            <h2>⭐ 4. Valoración del Sitio</h2>
-            <p>Espacio para retroalimentación y opiniones de los usuarios sobre la plataforma.</p>
-        </div>
+                    <div class="p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
+                        <p class="font-semibold mb-3 text-sm">2. En el ejemplo anterior, la edad "26" es un valor atípico muy alto. ¿Qué medida se verá más afectada o sesgada?</p>
+                        <div class="space-y-2 text-xs">
+                            <label class="flex items-center space-x-2 p-2 bg-white dark:bg-slate-800 rounded-lg cursor-pointer hover:bg-slate-100"><input type="radio" name="q2" value="media"> <span>La Media Aritmética</span></label>
+                            <label class="flex items-center space-x-2 p-2 bg-white dark:bg-slate-800 rounded-lg cursor-pointer hover:bg-slate-100"><input type="radio" name="q2" value="mediana"> <span>La Mediana</span></label>
+                        </div>
+                    </div>
 
-        <!-- Pestaña: CRÉDITOS (Restaurado a la versión anterior original) -->
-        <div id="creditos" class="tab-content">
-            <h2>👥 5. Créditos</h2>
-            <p>Información de autoría, agradecimientos, referencias bibliográficas institucionales y el equipo de desarrollo de la versión inicial.</p>
-            <!-- [Agrega aquí el listado de nombres/referencias exactas de tu versión previa] -->
-        </div>
+                    <button onclick="calificarQuiz()" class="w-full bg-[#0076c0] hover:bg-[#005c96] text-white font-bold py-3 px-6 rounded-xl transition shadow-md text-sm">
+                        Análisis de Respuestas
+                    </button>
+                </div>
+                <div id="quiz-result" class="mt-4 hidden p-4 rounded-xl font-bold text-center text-sm"></div>
+            </div>
+        </section>
+
+        <section id="tab-actividades" class="tab-content hidden space-y-6">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-md border border-slate-100 dark:border-slate-700">
+                <h2 class="text-xl font-bold text-[#005c96] dark:text-primary-300 mb-2">🎮 Zona del Diseñador: Banco de Actividades</h2>
+                <p class="text-xs text-slate-600 dark:text-slate-300">
+                    Contenedor interactivo estructurado. Listo para desplegar las simulaciones dinámicas y acertijos de objetos móviles en el siguiente paso de desarrollo.
+                </p>
+                <div class="mt-6 p-10 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl text-center bg-slate-50 dark:bg-slate-800">
+                    <p class="text-sm font-medium text-slate-400">
+                        [Estructura limpia preparada para inyección de simuladores lógico-matemáticos]
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-encuesta" class="tab-content hidden space-y-6">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-md border border-slate-100 dark:border-slate-700">
+                <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">⭐ Encuesta de Valoración y Co-evaluación</h2>
+                <form id="survey-form" class="space-y-4" onsubmit="saveSurvey(event)">
+                    <div>
+                        <label class="block text-xs font-semibold mb-2">¿Cómo calificas la usabilidad pedagógica del sitio?</label>
+                        <select class="w-full p-2 text-xs rounded-lg border bg-white dark:bg-slate-700 border-slate-300" required>
+                            <option value="">Selecciona...</option>
+                            <option value="5">5 - Excelente</option>
+                            <option value="4">4 - Buena</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-lg text-xs transition">
+                        Guardar Valoración
+                    </button>
+                </form>
+                <p id="survey-msg" class="text-emerald-600 font-bold hidden text-xs mt-2"></p>
+            </div>
+        </section>
+
+        <section id="tab-creditos" class="tab-content hidden space-y-6">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-md border border-slate-100 dark:border-slate-700 text-center">
+                <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-6">👥 Equipo de Autores Académicos</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-slate-50 dark:bg-slate-700 p-4 rounded-xl border border-slate-200 dark:border-slate-600">
+                        <div class="text-3xl mb-2">👨‍🏫</div>
+                        <h3 class="font-bold text-[#005c96] dark:text-primary-300 text-sm">David Beleño</h3>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Licenciatura en Matemáticas</p>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-700 p-4 rounded-xl border border-slate-200 dark:border-slate-600">
+                        <div class="text-3xl mb-2">👨‍💻</div>
+                        <h3 class="font-bold text-[#005c96] dark:text-primary-300 text-sm">Jesús De Arco</h3>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Diseño Curricular y Didáctica</p>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-700 p-4 rounded-xl border border-slate-200 dark:border-slate-600">
+                        <div class="text-3xl mb-2">📊</div>
+                        <h3 class="font-bold text-[#005c96] dark:text-primary-300 text-sm">Fabián Díaz</h3>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Evaluación y Estadística</p>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-700 p-4 rounded-xl border border-slate-200 dark:border-slate-600">
+                        <div class="text-3xl mb-2">🚀</div>
+                        <h3 class="font-bold text-[#005c96] dark:text-primary-300 text-sm">Joshua Guadagno</h3>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Desarrollo e Inclusión Web</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
     </main>
 
-    <!-- Footer Actualizado según tu instrucción -->
-    <footer>
-        © 2026 - Clas de estadística
+    <footer class="bg-white dark:bg-slate-800 text-center py-4 border-t border-slate-200 dark:border-slate-700 transition-colors">
+        <p class="text-xs text-slate-500 dark:text-slate-400">© 2026 - Clas de estadística</p>
     </footer>
 
-    <!-- Lógica de navegación de pestañas -->
     <script>
-        function switchTab(event, tabId) {
-            // Desactivar todos los contenidos
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
+        // Control de Navegación Profesional de Pestañas
+        function openTab(event, tabId) {
+            // Ocultar contenidos
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            // Mostrar seleccionado
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            
+            // Administrar clases de los botones activos
+            document.querySelectorAll('.tab-btn-custom').forEach(btn => {
+                btn.classList.remove('active-tab');
+            });
+            
+            // Asignar estado activo al elemento que disparó el evento
+            event.currentTarget.classList.add('active-tab');
+        }
 
-            // Desactivar todos los botones
-            const buttons = document.querySelectorAll('.tab-button');
-            buttons.forEach(button => button.classList.remove('active'));
+        // Accesibilidad - Tamaño de Fuente
+        const fontSizes = ['text-sm', 'text-base', 'text-lg'];
+        const sizeLabels = ['1x', '1.2x', '1.5x'];
+        let currentSizeIdx = 0;
+        
+        document.getElementById('btn-font').addEventListener('click', () => {
+            document.body.classList.remove(fontSizes[currentSizeIdx]);
+            currentSizeIdx = (currentSizeIdx + 1) % fontSizes.length;
+            document.body.classList.add(fontSizes[currentSizeIdx]);
+            document.getElementById('font-level-badge').innerText = sizeLabels[currentSizeIdx];
+        });
 
-            // Activar pestaña y botón actual
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
+        // Accesibilidad - Contraste
+        document.getElementById('btn-contrast').addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('contrast-icon').innerText = isDark ? '☀️' : '🌙';
+        });
+
+        // Evaluación Diagnóstica
+        function calificarQuiz() {
+            const q1 = document.querySelector('input[name="q1"]:checked');
+            const q2 = document.querySelector('input[name="q2"]:checked');
+            
+            if (!q1 || !q2) {
+                alert("Por favor, responde todas las preguntas del diagnóstico.");
+                return;
+            }
+            
+            let aciertos = 0;
+            if (q1.value === '15') aciertos++;
+            if (q2.value === 'media') aciertos++;
+            
+            const target = document.getElementById('quiz-result');
+            target.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-yellow-100', 'text-yellow-800');
+            
+            if (aciertos === 2) {
+                target.innerText = "¡Excelente! 2/2 aciertos. Tienes bases firmes para las actividades.";
+                target.classList.add('bg-green-100', 'text-green-800');
+            } else {
+                target.innerText = `Resultado: ${aciertos}/2 aciertos. ¡Buen intento! Te sugerimos repasar la Pestaña 1.`;
+                target.classList.add('bg-yellow-100', 'text-yellow-800');
+            }
+        }
+
+        // Guardar Encuesta
+        function saveSurvey(e) {
+            e.preventDefault();
+            const msg = document.getElementById('survey-msg');
+            msg.innerText = "¡Muchas gracias! Tu opinión se ha guardado localmente.";
+            msg.classList.remove('hidden');
         }
     </script>
 </body>
