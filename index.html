@@ -325,159 +325,139 @@
             </div>
         </section>
 
-        <section id="tab-actividades" class="tab-content hidden space-y-6">
+        <section id="actividades" class="tab-content hidden space-y-6 animate-fadeIn">
             <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-md border border-slate-100 dark:border-slate-700">
-                <h2 class="text-2xl font-bold text-primary-700 dark:text-primary-300 mb-2">🎮 Zona de Actividades</h2>
-                <p class="text-slate-600 dark:text-slate-300 mb-4 text-xs">
-                    Selecciona una simulación para abrir de forma limpia su entorno interactivo independiente en el navegador.
-                </p>
+                <div class="text-center max-w-2xl mx-auto mb-6">
+                    <h2 class="text-2xl font-bold text-primary-700 dark:text-primary-100 mb-2">🎮 Laboratorio Estadístico Interactivo</h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Selecciona una actividad interactiva para poner a prueba tus habilidades. Las actividades avanzadas requieren un código de acceso.</p>
+                </div>
 
-                <div class="space-y-12">
-                    <div id="act-env-1" class="border border-slate-200 dark:border-slate-700 rounded-2xl p-4 bg-slate-50 dark:bg-slate-900/20 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-                        <div class="space-y-3">
-                            <span class="bg-blue-600 text-white font-bold px-2.5 py-1 rounded text-[10px] uppercase">Actividad 1: El Centro del Laberinto</span>
-                            <p class="text-xs leading-relaxed text-slate-700 dark:text-slate-300">
-                                <strong>Problema:</strong> Un grupo de investigadores mide los minutos que tardan 6 estudiantes en resolver un enigma lógico. Los tiempos son: 10, 12, 12, 14, 15 y 47 minutos. El último estudiante se distrajo por completo. ¿Cuál de las medidas de tendencia central describe de forma real el rendimiento típico del grupo sin verse afectada por la distracción extrema?
-                            </p>
-                            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
-                                <label class="block text-xs font-semibold">Introduce el valor numérico de la Mediana calculada:</label>
-                                <input type="number" id="act1-ans" class="w-full p-2 border rounded text-xs dark:bg-slate-700" placeholder="Ej. 13">
-                                <button onclick="checkAct1()" class="bg-primary-600 text-white font-bold px-3 py-1.5 rounded text-xs mt-2 w-full">Validar Respuestas e Interacción</button>
-                                <p id="feedback-1" class="text-xs font-bold mt-1 hidden"></p>
-                            </div>
+                <div class="flex flex-wrap justify-center gap-3 p-3 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700 mb-8">
+                    <button onclick="selectInteractiveActivity(1)" id="btn-act-1" class="px-4 py-2.5 rounded-lg text-sm font-bold transition flex items-center gap-2 bg-primary-600 text-white shadow-sm">
+                        <span>🎯 Actividad 1</span>
+                    </button>
+                    <button onclick="selectInteractiveActivity(2)" id="btn-act-2" class="px-4 py-2.5 rounded-lg text-sm font-bold transition flex items-center gap-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
+                        <span>⚡ Actividad 2</span> <span id="lock-act-2">🔒</span>
+                    </button>
+                    <button onclick="selectInteractiveActivity(3)" id="btn-act-3" class="px-4 py-2.5 rounded-lg text-sm font-bold transition flex items-center gap-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
+                        <span>📈 Actividad 3</span> <span id="lock-act-3">🔒</span>
+                    </button>
+                    <button onclick="selectInteractiveActivity(4)" id="btn-act-4" class="px-4 py-2.5 rounded-lg text-sm font-bold transition flex items-center gap-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
+                        <span>🧮 Actividad 4</span> <span id="lock-act-4">🔒</span>
+                    </button>
+                    <button onclick="selectInteractiveActivity(5)" id="btn-act-5" class="px-4 py-2.5 rounded-lg text-sm font-bold transition flex items-center gap-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
+                        <span>💎 Actividad 5</span> <span id="lock-act-5">🔒</span>
+                    </button>
+                </div>
+
+                <div id="container-activities-sub" class="relative min-h-[300px]">
+                    
+                    <div id="sub-act-1" class="activity-sub-panel space-y-4">
+                        <div class="border-l-4 border-primary-600 pl-4">
+                            <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100">🎯 Actividad 1: El Centro del Laberinto (Media, Mediana y Moda)</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Determina qué medida de tendencia central abre cada camino de salida analizando la distribución de los datos.</p>
                         </div>
-                        <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border flex flex-col items-center">
-                            <span class="text-xs font-bold mb-2 text-slate-500">Gráfica Interactiva de Tiempos</span>
-                            <svg class="w-full max-h-32" viewBox="0 0 200 100">
-                                <rect x="10" y="60" width="15" height="40" fill="#0284c7"></rect>
-                                <rect x="35" y="52" width="15" height="48" fill="#0284c7"></rect>
-                                <rect x="60" y="52" width="15" height="48" fill="#0284c7"></rect>
-                                <rect x="85" y="44" width="15" height="56" fill="#0284c7"></rect>
-                                <rect x="110" y="40" width="15" height="60" fill="#0284c7"></rect>
-                                <rect x="135" y="10" width="15" height="90" fill="#ef4444"></rect>
-                                <line x1="0" y1="48" x2="200" y2="48" stroke="#e11d48" stroke-width="1.5" stroke-dasharray="3 3"></line>
-                                <text x="5" y="42" fill="#e11d48" font-size="8" font-weight="bold">Línea de la Mediana = 13</text>
-                            </svg>
+                        <div class="bg-slate-100 dark:bg-slate-700 p-4 rounded-xl min-h-[200px] flex items-center justify-center border border-dashed border-slate-300 dark:border-slate-600">
+                            <p class="text-sm italic text-slate-500 dark:text-slate-400">[Contenido Interactivo de la Actividad 1]</p>
                         </div>
                     </div>
 
-                    <div id="act-env-2" class="border border-slate-200 dark:border-slate-700 rounded-2xl p-4 bg-slate-50 dark:bg-slate-900/20 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-                        <div class="space-y-3">
-                            <span class="bg-purple-600 text-white font-bold px-2.5 py-1 rounded text-[10px] uppercase">Actividad 2: Cazadores de Sesgo Estructural</span>
-                            <p class="text-xs leading-relaxed text-slate-700 dark:text-slate-300">
-                                <strong>Problema:</strong> En una fábrica se empacan bolsas de azúcar de 1000g. Un lote reporta pesos de: 950g, 1000g, 1000g, 1005g y 1050g. Mueve el objeto deslizante de abajo para simular cómo cambia la Media Aritmética cuando agregamos un error crítico de empaque de un objeto móvil atípico de 1400g.
-                            </p>
-                            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
-                                <label class="block text-xs font-semibold text-purple-600">Mueve el deslizador del Objeto Atípico:</label>
-                                <input type="range" id="act2-slider" min="1000" max="1500" value="1000" oninput="updateAct2Chart(this.value)" class="w-full cursor-pointer">
-                                <p class="text-[11px] font-medium">Peso Atípico Actual: <span id="act2-val" class="font-bold text-purple-600">1000g</span></p>
-                                <p class="text-[11px] font-medium">Nueva Media del Salón: <span id="act2-media-calc" class="font-bold text-blue-600">1001g</span></p>
-                                <button onclick="checkAct2()" class="bg-purple-600 text-white font-bold px-3 py-1.5 rounded text-xs mt-1 w-full">Analizar Impacto Estructural</button>
-                                <p id="feedback-2-text" class="text-xs font-bold mt-1 hidden"></p>
-                            </div>
+                    <div id="sub-act-2" class="activity-sub-panel hidden space-y-4">
+                        <div class="border-l-4 border-amber-600 pl-4">
+                            <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100">⚡ Actividad 2: Cazadores de Sesgo Estructural</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Analiza gráficos de barras sesgados o asimétricos e identifica qué manipulación visual o de escala se ha aplicado.</p>
                         </div>
-                        <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border flex flex-col items-center justify-center">
-                            <span class="text-xs font-bold mb-2 text-slate-500">Visualizador de Sesgo Dinámico</span>
-                            <div class="w-full bg-slate-100 dark:bg-slate-700 h-24 rounded-lg relative flex items-center">
-                                <div id="act2-balance" class="absolute w-4 h-4 bg-red-500 rounded-full transition-all" style="left: 50%;"></div>
-                                <div class="w-full border-b border-dashed border-slate-400 absolute"></div>
-                            </div>
-                            <span class="text-[10px] text-slate-400 mt-2">La bola roja simula el desbalance del centro numérico de la muestra.</span>
+                        <div class="bg-slate-100 dark:bg-slate-700 p-4 rounded-xl min-h-[200px] flex items-center justify-center border border-dashed border-slate-300 dark:border-slate-600">
+                            <p class="text-sm italic text-slate-500 dark:text-slate-400">[Contenido Interactivo de la Actividad 2]</p>
                         </div>
                     </div>
 
-                    <div id="act-env-3" class="border border-slate-200 dark:border-slate-700 rounded-2xl p-4 bg-slate-50 dark:bg-slate-900/20 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-                        <div class="space-y-3">
-                            <span class="bg-emerald-600 text-white font-bold px-2.5 py-1 rounded text-[10px] uppercase">Actividad 3: Simulador de Dispersión Dinámica</span>
-                            <p class="text-xs leading-relaxed text-slate-700 dark:text-slate-300">
-                                <strong>Problema:</strong> Dos atletas registran sus tiempos en segundos para 4 carreras. Atleta A: [10, 10, 10, 10]. Atleta B: [8, 9, 11, 12]. Ambos poseen la misma media de 10 segundos, pero su consistencia es radicalmente distinta. Llena los espacios para evaluar la variabilidad.
-                            </p>
-                            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
-                                <label class="block text-xs font-semibold">¿Cuál es el Rango numérico exacto del Atleta B?</label>
-                                <input type="number" id="act3-ans" class="w-full p-2 border rounded text-xs dark:bg-slate-700" placeholder="Dato mayor menos dato menor">
-                                <button onclick="checkAct3()" class="bg-emerald-600 text-white font-bold px-3 py-1.5 rounded text-xs mt-2 w-full">Calcular Consistencia de Datos</button>
-                                <p id="feedback-3" class="text-xs font-bold mt-1 hidden"></p>
-                            </div>
+                    <div id="sub-act-3" class="activity-sub-panel hidden space-y-4">
+                        <div class="border-l-4 border-emerald-600 pl-4">
+                            <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100">📈 Actividad 3: Simulador de Dispersión Dinámica</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Modifica los puntos de un plano cartesiano en tiempo real y observa cómo varía instantáneamente la desviación estándar y el rango.</p>
                         </div>
-                        <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border flex flex-col items-center">
-                            <span class="text-xs font-bold mb-2 text-slate-500">Gráfica de Estabilidad (Dispersión)</span>
-                            <div class="flex gap-4 justify-center items-end h-24 w-full">
-                                <div class="w-12 bg-blue-400 h-20 text-center text-[10px] text-white font-bold pt-2">A (R=0)</div>
-                                <div class="w-12 bg-emerald-400 h-12 text-center text-[10px] text-white font-bold pt-2">B (R=4)</div>
-                            </div>
+                        <div class="bg-slate-100 dark:bg-slate-700 p-4 rounded-xl min-h-[200px] flex items-center justify-center border border-dashed border-slate-300 dark:border-slate-600">
+                            <p class="text-sm italic text-slate-500 dark:text-slate-400">[Contenido Interactivo de la Actividad 3]</p>
                         </div>
                     </div>
 
-                    <div id="act-env-4" class="border border-slate-200 dark:border-slate-700 rounded-2xl p-4 bg-slate-50 dark:bg-slate-900/20 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-                        <div class="space-y-3">
-                            <span class="bg-amber-600 text-white font-bold px-2.5 py-1 rounded text-[10px] uppercase">Actividad 4: Desafío de Frecuencias y Mediana</span>
-                            <p class="text-xs leading-relaxed text-slate-700 dark:text-slate-300">
-                                <strong>Problema:</strong> Un docente registra la cantidad de libros leídos por sus estudiantes en el trimestre mediante una tabla de frecuencias agrupadas. Completa el valor que falta en la celda de frecuencia acumulada de la tabla interactiva de la derecha.
-                            </p>
-                            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
-                                <label class="block text-xs font-semibold">Introduce el valor que falta en la celda amarilla ($F_i$):</label>
-                                <input type="number" id="act4-ans" class="w-full p-2 border rounded text-xs dark:bg-slate-700" placeholder="Ej. 12">
-                                <button onclick="checkAct4()" class="bg-amber-600 text-white font-bold px-3 py-1.5 rounded text-xs mt-2 w-full">Comprobar Tabla Inclusiva</button>
-                                <p id="feedback-4" class="text-xs font-bold mt-1 hidden"></p>
-                            </div>
+                    <div id="sub-act-4" class="activity-sub-panel hidden space-y-4">
+                        <div class="border-l-4 border-purple-600 pl-4">
+                            <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100">🧮 Actividad 4: Desafío de Frecuencias y Mediana</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Completa la tabla de distribución acumulada arrastrando las frecuencias correctas para hallar la posición exacta de la mediana.</p>
                         </div>
-                        <div class="bg-white dark:bg-slate-800 p-2 rounded-xl shadow-sm border overflow-x-auto w-full">
-                            <table class="w-full text-center text-[11px] border-collapse">
-                                <thead>
-                                    <tr class="bg-slate-100 dark:bg-slate-700">
-                                        <th class="p-1 border">Libros ($X_i$)</th>
-                                        <th class="p-1 border">Alumnos ($f_i$)</th>
-                                        <th class="p-1 border">Acumulada ($F_i$)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="p-1 border">1 - 3 libros</td>
-                                        <td class="p-1 border">4</td>
-                                        <td class="p-1 border">4</td>
-                                    </tr>
-                                    <tr class="bg-amber-50 dark:bg-amber-900/20">
-                                        <td class="p-1 border">4 - 6 libros</td>
-                                        <td class="p-1 border">8</td>
-                                        <td class="p-1 border font-bold text-amber-600">❓ (Falta)</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="bg-slate-100 dark:bg-slate-700 p-4 rounded-xl min-h-[200px] flex items-center justify-center border border-dashed border-slate-300 dark:border-slate-600">
+                            <p class="text-sm italic text-slate-500 dark:text-slate-400">[Contenido Interactivo de la Actividad 4]</p>
                         </div>
                     </div>
 
-                    <div id="act-env-5" class="border border-slate-200 dark:border-slate-700 rounded-2xl p-4 bg-slate-50 dark:bg-slate-900/20 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-                        <div class="space-y-3">
-                            <span class="bg-pink-600 text-white font-bold px-2.5 py-1 rounded text-[10px] uppercase">Actividad 5: Co-relación Extrema de Datos</span>
-                            <p class="text-xs leading-relaxed text-slate-700 dark:text-slate-300">
-                                <strong>Problema:</strong> Se analiza la relación entre las horas de estudio semanales y la varianza de las calificaciones obtenidas. A mayor consistencia en el estudio, la dispersión tiende a reducirse a cero de forma inversamente proporcional. ¿Cómo se define matemáticamente esta interacción?
-                            </p>
-                            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
-                                <label class="block text-xs font-semibold">Selecciona la conclusión científica correcta:</label>
-                                <select id="act5-ans" class="w-full p-2 border rounded text-xs dark:bg-slate-700">
-                                    <option value="">Selecciona una deducción...</option>
-                                    <option value="wrong">A más horas de estudio, mayor variabilidad desordenada</option>
-                                    <option value="correct">A más horas de estudio estable, menor es la varianza (mayor homogeneidad)</option>
-                                </select>
-                                <button onclick="checkAct5()" class="bg-pink-600 text-white font-bold px-3 py-1.5 rounded text-xs mt-2 w-full">Enviar Informe Final</button>
-                                <p id="feedback-5" class="text-xs font-bold mt-1 hidden"></p>
-                            </div>
+                    <div id="sub-act-5" class="activity-sub-panel hidden space-y-4">
+                        <div class="border-l-4 border-pink-600 pl-4">
+                            <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100">💎 Actividad 5: Co-relación Extrema de Datos</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Encuentra relaciones ocultas entre variables cualitativas y cuantitativas para deducir conclusiones institucionales certeras.</p>
                         </div>
-                        <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border flex flex-col items-center">
-                            <span class="text-xs font-bold mb-2 text-slate-500">Diagrama de Dispersión Limpio</span>
-                            <svg class="w-full max-h-32" viewBox="0 0 200 100">
-                                <circle cx="20" cy="80" r="3" fill="#db2777"></circle>
-                                <circle cx="50" cy="65" r="3" fill="#db2777"></circle>
-                                <circle cx="90" cy="40" r="3" fill="#db2777"></circle>
-                                <circle cx="140" cy="20" r="3" fill="#db2777"></circle>
-                                <line x1="10" y1="90" x2="160" y2="10" stroke="#94a3b8" stroke-width="1"></line>
-                            </svg>
+                        <div class="bg-slate-100 dark:bg-slate-700 p-4 rounded-xl min-h-[200px] flex items-center justify-center border border-dashed border-slate-300 dark:border-slate-600">
+                            <p class="text-sm italic text-slate-500 dark:text-slate-400">[Contenido Interactivo de la Actividad 5]</p>
                         </div>
                     </div>
+
                 </div>
             </div>
-        </section>
 
+            <script>
+                // Estado de desbloqueo de actividades (La 1 inicia desbloqueada automáticamente)
+                const unlockedActivities = {
+                    1: true,
+                    2: false,
+                    3: false,
+                    4: false,
+                    5: false
+                };
+
+                function selectInteractiveActivity(id) {
+                    // Si está bloqueada, pedir contraseña
+                    if (!unlockedActivities[id]) {
+                        const password = prompt("🔐 Esta actividad está protegida.\nPor favor, introduce la contraseña para acceder:");
+                        
+                        if (password === "0000") {
+                            unlockedActivities[id] = true;
+                            // Reemplazar candado por check o simplemente removerlo
+                            const lockSpan = document.getElementById(`lock-act-${id}`);
+                            if (lockSpan) lockSpan.innerText = "🔓";
+                            alert("✅ ¡Actividad desbloqueada con éxito!");
+                        } else {
+                            if (password !== null) {
+                                alert("❌ Contraseña incorrecta. Inténtalo de nuevo.");
+                            }
+                            return; // Cancelar visualización si no introduce la clave correcta
+                        }
+                    }
+
+                    // 1. Ocultar todos los paneles de actividades
+                    const panels = document.querySelectorAll('.activity-sub-panel');
+                    panels.forEach(panel => panel.classList.add('hidden'));
+
+                    // 2. Mostrar únicamente la seleccionada
+                    const targetPanel = document.getElementById(`sub-act-${id}`);
+                    if (targetPanel) targetPanel.classList.remove('hidden');
+
+                    // 3. Actualizar estilos visuales de los botones del menú superior
+                    for (let i = 1; i <= 5; i++) {
+                        const btn = document.getElementById(`btn-act-${i}`);
+                        if (btn) {
+                            if (i === id) {
+                                // Estilo activo
+                                btn.className = "px-4 py-2.5 rounded-lg text-sm font-bold transition flex items-center gap-2 bg-primary-600 text-white shadow-sm";
+                            } else {
+                                // Estilo inactivo estándar
+                                btn.className = "px-4 py-2.5 rounded-lg text-sm font-bold transition flex items-center gap-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600";
+                            }
+                        }
+                    }
+                }
+            </script>
+        </section>
         <section id="tab-encuesta" class="tab-content hidden space-y-6">
             <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-md border border-slate-100 dark:border-slate-700">
                 <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">⭐ Encuesta de Valoración</h2>
