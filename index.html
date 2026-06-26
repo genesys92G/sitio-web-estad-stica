@@ -473,6 +473,108 @@
             </div>
         </section>
 
+        <section id="tab-satisfaccion" class="content-section hidden space-y-6">
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow border border-slate-200 dark:border-slate-700">
+                <h2 class="text-xl font-bold text-primary-700 dark:text-primary-100 border-b border-slate-100 dark:border-slate-700 pb-2 mb-4">❤️ Evaluación de Satisfacción de la Plataforma</h2>
+                <form onsubmit="saveSurvey(event)" class="space-y-4">
+                    <div class="space-y-1">
+                        <label class="block font-semibold text-xs text-slate-500 uppercase tracking-wider">Grado de utilidad del recurso interactivo:</label>
+                        <select required class="border p-2 rounded-lg text-xs w-full text-slate-900 bg-white">
+                            <option value="excelente">Excelente - Aporta valor didáctico al aula</option>
+                            <option value="bueno">Bueno - Interactivo y útil</option>
+                            <option value="regular">Regular - Podría mejorar</option>
+                        </select>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block font-semibold text-xs text-slate-500 uppercase tracking-wider">Comentarios o Sugerencias técnicas:</label>
+                        <textarea required class="border p-2 rounded-lg text-xs w-full h-24 text-slate-900 bg-white" placeholder="Escribe aquí tu feedback institucional..."></textarea>
+                    </div>
+                    <button type="submit" class="bg-primary-600 hover:bg-primary-700 text-white font-bold px-5 py-2 rounded-xl text-sm shadow transition uppercase tracking-wider">Enviar Comentarios</button>
+                    <p id="survey-msg" class="text-xs text-emerald-600 font-bold hidden"></p>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 py-4 mt-12 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 dark:text-slate-400 font-medium">
+            &copy; 2026 Plataforma Educativa de Estadística • Desarrollado para la Evaluación e Innovación Curricular.
+        </div>
+    </footer>
+
+    <script>
+        // Control de Estado del Bloqueo de Actividades
+        let unlockedActivities = {
+            1: true,  // Libre de fábrica
+            2: false,
+            3: false,
+            4: false,
+            5: false
+        };
+
+        // Manejo de Navegación Estructural Básica
+        function openTab(tabId) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-primary-700', 'border-white');
+                btn.classList.add('border-transparent');
+            });
+
+            const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.getAttribute('onclick').includes(tabId));
+            if (activeBtn) {
+                activeBtn.classList.add('bg-primary-700', 'border-white');
+                activeBtn.classList.remove('border-transparent');
+            }
+        }
+
+        // Mostrar / Ocultar el panel centralizado de globos
+        function toggleGlobos() {
+            const contenedor = document.getElementById('contenedor-globos');
+            contenedor.classList.toggle('hidden');
+        }
+
+        // Selección unificada de actividades con control de contraseña
+        function seleccionarActividad(numero) {
+            // Validar si requiere código y está bloqueado
+            if (!unlockedActivities[numero]) {
+                const password = prompt("🔐 Esta actividad está bloqueada. Ingresa el código de acceso (0000):");
+                if (password === "0000") {
+                    unlockedActivities[numero] = true;
+                    // Actualizar UI del globo quitando el candado y restaurando color original
+                    const globo = document.getElementById(`btn-globo-${numero}`);
+                    const lockIcon = document.getElementById(`lock-icon-${numero}`);
+                    
+                    if (lockIcon) lockIcon.innerText = "🎮";
+                    
+                    // Asignar colores de acuerdo a su reto original
+                    if (numero === 2) globo.className = globo.className.replace('bg-slate-400 dark:bg-slate-600', 'bg-blue-600 hover:bg-blue-700');
+                    if (numero === 3) globo.className = globo.className.replace('bg-slate-400 dark:bg-slate-600', 'bg-purple-600 hover:bg-purple-700');
+                    if (numero === 4) globo.className = globo.className.replace('bg-slate-400 dark:bg-slate-600', 'bg-amber-600 hover:bg-amber-700');
+                    if (numero === 5) globo.className = globo.className.replace('bg-slate-400 dark:bg-slate-600', 'bg-pink-600 hover:bg-pink-700');
+                    
+                    alert("¡Acceso concedido! Actividad desbloqueada.");
+                } else {
+                    alert("⚠️ Código incorrecto. No se puede acceder a la actividad.");
+                    return; // Abortar visualización
+                }
+            }
+
+            // Si está desbloqueado, mostrar en el visor inferior
+            document.getElementById('visor-actividades').classList.remove('hidden');
+            document.querySelectorAll('.subact-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById(`subact-${numero}`).classList.remove('hidden');
+            
+            // Scroll suave hacia el visor para mejor experiencia
+            document.getElementById('visor-actividades').scrollIntoView({ behavior: 'smooth' });
+        }
+
         <section id="tab-encuesta" class="tab-content hidden space-y-6">
             <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-md border border-slate-100 dark:border-slate-700">
                 <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">⭐ Encuesta de Valoración</h2>
