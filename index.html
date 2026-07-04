@@ -485,8 +485,10 @@
 
     <header>
         <button class="btn btn-home" onclick="confirmarInicio()">📊 HOME</button>
-        <div class="header-title">Exploradores de Datos</div>
-        <span style="font-weight: normal; font-size: 0.8em; opacity: 0.9;">Análisis Pedagógico</span>
+        <div class="header-title">
+        Exploradores de Datos: 
+        <span style="font-weight: normal; font-size: 1.4em; opacity: 0.9;">investigación estadística aplicada</span>
+        </div>
         <button class="btn btn-action" onclick="navegarFase('fase1')">Iniciar Investigación ➔</button>
     </header>
 
@@ -948,7 +950,7 @@
                     '</div>' +
                     '<p>El análisis se centrará en el estudio de las <strong>Medidas de Dispersión</strong> (Rango, Varianza, Desviación Estándar y Coeficiente de Variación). Estas métricas nos permitirán comprender el nivel de variabilidad, homogeneidad y riesgo en un conjunto de datos, competencias fundamentales para la toma de decisiones en ciencias, ingeniería y economía.</p>';
             } else if (seccion === 'objetivos') {
-                display.innerHTML = '<h2>Objetivos de Aprendizaje (Nivel Medio)</h2><ul style="margin-left: 20px; line-height: 1.8;"><li>Estructurar investigaciones estadísticas siguiendo las 5 fases del ciclo PPDAC.</li><li>Diferenciar conceptual y operativamente las medidas de tendencia central de las medidas de dispersión.</li><li>Procesar conjuntos de datos robustos empleando software estadístico especializado.</li><li>Interpretar la Desviación Estándar y el Coeficiente de Variación para emitir diagnósticos sobre la homogeneidad poblacional.</li></ul>';
+                display.innerHTML = '<h2>Objetivos de Aprendizaje</h2><ul style="margin-left: 20px; line-height: 1.8;"><li>Estructurar investigaciones estadísticas siguiendo las 5 fases del ciclo PPDAC.</li><li>Diferenciar conceptual y operativamente las medidas de tendencia central de las medidas de dispersión.</li><li>Procesar conjuntos de datos robustos empleando software estadístico especializado.</li><li>Interpretar la Desviación Estándar y el Coeficiente de Variación para emitir diagnósticos sobre la homogeneidad poblacional.</li></ul>';
             } else if (seccion === 'video-jamovi') {
                 // MODIFICACIÓN 5: Botón de YouTube Centrado
                 display.innerHTML = '<h2>Explorando la interfaz de Jamovi</h2>' +
