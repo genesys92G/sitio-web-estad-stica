@@ -1,2 +1,2 @@
 # Cycle-PPDAC
-Página web educativa diseñada para abordar el DBA sobre el carácter relativo y complementario de las medidas de tendencia central y dispersión, incluyendo herramientas tecnológicas interactiva para la toma de conclusiones.
+Plataforma educativa diseñada para el fortalecimiento del pensamiento aleatorio a través del Ciclo de Investigación PPDAC. El sitio integra herramientas interactivas para el análisis de medidas de dispersión, permitiendo a los estudiantes transitar desde el cálculo hacia la toma de decisiones críticas en contextos reales.
