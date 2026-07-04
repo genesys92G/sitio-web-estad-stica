@@ -39,8 +39,14 @@
             padding: 0;
         }
 
-        body {
+        /* MODIFICACIÓN 3: Normalización global de fuentes para evitar tamaños exagerados */
+        body, p, li, span, div, select, input, textarea {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-size: 1rem !important; /* 16px estándar */
+            line-height: 1.6 !important;
+        }
+
+        body {
             background-color: var(--bg-color);
             color: var(--text-main);
             height: 100vh;
@@ -48,6 +54,11 @@
             flex-direction: column;
             transition: background-color 0.3s, color 0.3s;
         }
+
+        /* Ajuste de encabezados para armonizar con la normalización */
+        h1, .header-title { font-size: 1.5rem !important; }
+        h2 { font-size: 1.3rem !important; margin-bottom: 15px !important; }
+        h3 { font-size: 1.15rem !important; }
 
         /* --- CONTRAST BUTTON --- */
         .btn-theme {
@@ -60,7 +71,7 @@
             background-color: var(--primary);
             color: var(--surface);
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.5rem !important;
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             z-index: 1000;
@@ -85,7 +96,6 @@
         body.dark-mode header { background-color: #1e293b; border-bottom: 1px solid #334155; }
         
         .header-title {
-            font-size: 1.75rem;
             font-weight: 700;
             letter-spacing: 0.5px;
         }
@@ -95,7 +105,6 @@
             border-radius: 6px;
             padding: 0.6rem 1.2rem;
             font-weight: 600;
-            font-size: 1rem;
             transition: all 0.2s ease-in-out;
         }
         .btn-home {
@@ -121,6 +130,7 @@
             display: none;
             height: 100%;
             overflow-y: auto;
+            padding-bottom: 2rem;
         }
         .tab-content.active {
             display: flex;
@@ -150,7 +160,6 @@
             text-align: left;
             padding: 1rem 1.2rem;
             border-radius: 8px;
-            font-size: 1.05rem;
             border: 1px solid transparent;
             transition: all 0.2s;
         }
@@ -163,15 +172,11 @@
         .right-content {
             flex: 1;
             padding: 3rem 4rem;
-            line-height: 1.7;
-            font-size: 1.1rem;
             background-color: var(--bg-color);
             overflow-y: auto;
         }
         .right-content h2 {
             color: var(--primary);
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
             border-bottom: 2px solid var(--border);
             padding-bottom: 0.5rem;
         }
@@ -181,23 +186,59 @@
             color: var(--text-muted);
         }
 
+        /* --- PRE-TEST STYLES --- */
+        .test-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .test-q {
+            background-color: var(--surface);
+            padding: 1.8rem;
+            border-radius: 8px;
+            border-left: 5px solid var(--secondary);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .test-q p {
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+        .test-q select, .test-q input {
+            max-width: 100%;
+            margin-bottom: 8px;
+        }
+        .match-list {
+            list-style: none;
+            padding: 0;
+        }
+        .match-list li {
+            background: var(--bg-color);
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
         /* --- BARRA PPDAC --- */
         .ppdac-bar {
-            background-color: var(--surface);
-            padding: 1.2rem;
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            border-top: 1px solid var(--border);
-            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.05);
+            gap: 10px;
         }
         .btn-ppdac {
             background-color: var(--bg-color);
             color: var(--text-main);
             border: 1px solid var(--border);
             font-weight: bold;
-            padding: 0.8rem 1.5rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 50px;
+            cursor: pointer;
         }
         .btn-ppdac:hover {
             background-color: var(--primary);
@@ -207,6 +248,8 @@
 
         /* --- FASES (FULLSCREEN) --- */
         .phase-container {
+            display: flex;               
+            flex-direction: column;
             width: 100%;
             max-width: 900px;
             margin: 2rem auto;
@@ -214,22 +257,22 @@
             padding: 3rem;
             border-radius: 12px;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            flex-direction: column;
+            height: auto;                
+            min-height: min-content;
+            overflow: visible;           
         }
         .phase-header {
             margin-bottom: 2rem;
             padding-bottom: 1rem;
             border-bottom: 2px solid var(--border);
         }
-        .phase-header h2 { color: var(--primary); font-size: 1.8rem; }
+        .phase-header h2 { color: var(--primary); }
         .context-box {
             background-color: var(--bg-color);
             border-left: 4px solid var(--primary);
             padding: 1.5rem;
             margin-bottom: 2rem;
             border-radius: 0 8px 8px 0;
-            font-size: 1.1rem;
-            line-height: 1.6;
         }
 
         /* --- INTERACCIÓN FASE 1 (ARMADO DE PALABRAS) --- */
@@ -274,7 +317,6 @@
             display: block;
             font-weight: 600;
             margin-bottom: 0.8rem;
-            font-size: 1.1rem;
             color: var(--text-main);
         }
         select, input[type="text"], textarea {
@@ -284,8 +326,6 @@
             border: 1px solid var(--border);
             background-color: var(--bg-color);
             color: var(--text-main);
-            font-size: 1rem;
-            font-family: inherit;
         }
         textarea { resize: vertical; min-height: 120px; }
         select:focus, textarea:focus {
@@ -311,8 +351,7 @@
             text-align: center;
             border: 1px solid var(--border);
             border-radius: 4px;
-            font-family: monospace;
-            font-size: 1.1rem;
+            font-family: monospace !important;
         }
 
         /* --- BOXPLOT INTERACTIVO --- */
@@ -329,7 +368,6 @@
         .boxplot-controls label {
             display: flex;
             flex-direction: column;
-            font-size: 0.95rem;
             font-weight: 600;
         }
         .boxplot-controls input[type=range] {
@@ -355,7 +393,6 @@
             display: flex;
             justify-content: space-between;
             padding: 0 10px;
-            font-size: 0.8rem;
             color: var(--text-muted);
             align-items: center;
         }
@@ -406,11 +443,11 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
         .modal-content h2 { color: var(--primary); margin-bottom: 1rem; }
-        .modal-content p { color: var(--text-muted); line-height: 1.6; font-size: 1.05rem; }
+        .modal-content p { color: var(--text-muted); line-height: 1.6; }
         
         /* --- SCORE LIST --- */
         .score-list {
-            list-style: none; padding: 0; font-size: 1.1rem; text-align: left; max-width: 500px; margin: 0 auto;
+            list-style: none; padding: 0; text-align: left; max-width: 500px; margin: 0 auto;
         }
         .score-list li {
             margin-bottom: 12px;
@@ -425,7 +462,6 @@
             border-radius: 12px;
             background-color: var(--primary);
             color: white;
-            font-size: 0.95rem;
         }
 
         /* --- FOOTER --- */
@@ -434,13 +470,11 @@
             color: #94a3b8;
             text-align: center;
             padding: 1.2rem;
-            font-size: 0.9rem;
             border-top: 2px solid var(--primary);
         }
         .feedback {
             font-weight: bold;
             margin-top: 10px;
-            font-size: 1.1rem;
         }
     </style>
 </head>
@@ -450,7 +484,7 @@
     <button class="btn-theme" onclick="toggleTheme()" title="Cambiar Contraste">🌓</button>
 
     <header>
-        <button class="btn btn-home" onclick="confirmarInicio()">🏠 Panel Principal</button>
+        <button class="btn btn-home" onclick="confirmarInicio()">🏠 HOME</button>
         <div class="header-title">Detectives de Datos</div>
         <button class="btn btn-action" onclick="navegarFase('fase1')">Iniciar Investigación ➔</button>
     </header>
@@ -460,25 +494,29 @@
         <div id="inicio" class="tab-content active" style="flex-direction: column;">
             <div class="split-screen">
                 <div class="left-menu">
-                    <button class="menu-btn active" onclick="mostrarSeccion('que-haremos', this)">¿Qué haremos?</button>
-                    <button class="menu-btn" onclick="mostrarSeccion('objetivos', this)">Objetivos de Aprendizaje</button>
-                    <button class="menu-btn" onclick="mostrarSeccion('estandares', this)">Estándares y DBA (Colombia)</button>
-                    <!-- NUEVO BOTÓN: VIDEO YOUTUBE JAMOVI -->
+                    <!-- MODIFICACIÓN 2: Emojis agregados al resto del menú -->
+                    <button class="menu-btn active" onclick="mostrarSeccion('que-haremos', this)">🎯 ¿Qué haremos?</button>
+                    <button class="menu-btn" onclick="mostrarSeccion('objetivos', this)">📝 Objetivos de Aprendizaje</button>
+                    <button class="menu-btn" onclick="mostrarSeccion('estandares', this)">📐 Estándares y DBA (Colombia)</button>
+                    <button class="menu-btn" onclick="mostrarSeccion('pre-test', this)">🧠 Conocimientos previos</button>
                     <button class="menu-btn" onclick="mostrarSeccion('video-jamovi', this)">📺 Tutorial Jamovi</button>
                 </div>
+                
                 <div class="right-content" id="info-display">
                     <h2>Investigación Estadística Aplicada</h2>
                     <p>En este proyecto, asumirán el rol de analistas de datos para resolver una problemática real utilizando el rigor del <strong>Ciclo de Investigación PPDAC</strong>. No se trata simplemente de aplicar fórmulas de manera mecánica; el verdadero desafío radicará en estructurar adecuadamente el problema, procesar la información y emitir juicios críticos sobre el comportamiento de los datos.</p>
+                    
+                    <!-- MODIFICACIÓN 1: Botones reubicados debajo del texto de introducción -->
+                    <div class="ppdac-bar" style="padding:1rem 0 1.5rem 0; flex-wrap:wrap; background: transparent; border:none; box-shadow:none;">
+                        <button class="btn-ppdac" onclick="abrirModalPPDAC('Problema')">1. Problema</button>
+                        <button class="btn-ppdac" onclick="abrirModalPPDAC('Plan')">2. Plan</button>
+                        <button class="btn-ppdac" onclick="abrirModalPPDAC('Datos')">3. Datos</button>
+                        <button class="btn-ppdac" onclick="abrirModalPPDAC('Análisis')">4. Análisis</button>
+                        <button class="btn-ppdac" onclick="abrirModalPPDAC('Conclusión')">5. Conclusión</button>
+                    </div>
+
                     <p>El análisis se centrará en el estudio de las <strong>Medidas de Dispersión</strong> (Rango, Varianza, Desviación Estándar y Coeficiente de Variación). Estas métricas nos permitirán comprender el nivel de variabilidad, homogeneidad y riesgo en un conjunto de datos, competencias fundamentales para la toma de decisiones en ciencias, ingeniería y economía.</p>
                 </div>
-            </div>
-            
-            <div class="ppdac-bar">
-                <button class="btn-ppdac" onclick="abrirModalPPDAC('Problema')">1. Problema</button>
-                <button class="btn-ppdac" onclick="abrirModalPPDAC('Plan')">2. Plan</button>
-                <button class="btn-ppdac" onclick="abrirModalPPDAC('Datos')">3. Datos</button>
-                <button class="btn-ppdac" onclick="abrirModalPPDAC('Análisis')">4. Análisis</button>
-                <button class="btn-ppdac" onclick="abrirModalPPDAC('Conclusión')">5. Conclusión</button>
             </div>
         </div>
 
@@ -714,7 +752,7 @@
 
                 <div class="question-group">
                     <label>2. Síntesis Analítica (Evidencia de Aprendizaje DBA 9):</label>
-                    <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 0.5rem;">Considerando que el Coeficiente de Variación determinó que el grupo es heterogéneo y que el diagrama de caja muestra una amplia dispersión, redacta una justificación técnica sobre qué decisiones pedagógicas debería tomar la institución.</p>
+                    <p style="color: var(--text-muted); margin-bottom: 0.5rem;">Considerando que el Coeficiente de Variación determinó que el grupo es heterogéneo y que el diagrama de caja muestra una amplia dispersión, redacta una justificación técnica sobre qué decisiones pedagógicas debería tomar la institución.</p>
                     <textarea id="p4_text" placeholder="Redacta tu análisis crítico aquí basándote en la variabilidad demostrada..."></textarea>
                 </div>
 
@@ -729,8 +767,8 @@
         <div id="fase5" class="tab-content" style="justify-content: center;">
             <div class="phase-container" style="text-align: center;">
                 <div class="phase-header" style="border: none;">
-                    <h2 style="font-size: 2.5rem; color: var(--success);">¡Investigación Completada!</h2>
-                    <p style="font-size: 1.2rem; color: var(--text-muted); margin-top: 1rem;">Has aplicado con éxito el rigor del Ciclo PPDAC.</p>
+                    <h2 style="color: var(--success); font-size: 2rem !important;">¡Investigación Completada!</h2>
+                    <p style="color: var(--text-muted); margin-top: 1rem;">Has aplicado con éxito el rigor del Ciclo PPDAC.</p>
                 </div>
 
                 <div style="background: var(--bg-color); border: 2px solid #10b981; border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
@@ -743,7 +781,7 @@
                     </ul>
                 </div>
 
-                <p style="font-size: 1.1rem; line-height: 1.6; text-align: justify; margin-bottom: 2rem;">
+                <p style="line-height: 1.6; text-align: justify; margin-bottom: 2rem;">
                     <strong>Conclusión Final:</strong> La dispersión encontrada (CV = 25.4%) confirma de manera cuantitativa las sospechas de los docentes. La institución no puede basarse únicamente en el "promedio", ya que este oculta la profunda desigualdad del aula. Gracias a tu análisis, se diseñarán planes de refuerzo focalizados.
                 </p>
 
@@ -777,7 +815,7 @@
     </div>
 
     <footer>
-        <p><strong>Desarrolladores:</strong> David Beleño, Fabián Díaz, Jesús De Arcos | <strong>Diseño de actividades:</strong> Joshua Guadagno</p>
+        <p><strong>Diseño de actividades:</strong> Fabián Díaz, Jesús De Arcos, Joshua Guadagno | <strong>Desarrollador</strong> David Beleño </p>
     </footer>
 
     <script>
@@ -796,34 +834,99 @@
             document.body.classList.toggle('dark-mode');
         }
 
-        // --- SISTEMA DE AUDIO (CLIC) ---
+        // --- MODIFICACIÓN 4: SISTEMA DE AUDIO VARIADO (Procedural) ---
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function reproducirClic() {
+        
+        function reproducirClic(tipo = 'default') {
             if (audioCtx.state === 'suspended') { audioCtx.resume(); }
             const oscillator = audioCtx.createOscillator();
             const gainNode = audioCtx.createGain();
             
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(800, audioCtx.currentTime); // Tono agudo
-            oscillator.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.05);
+            // Asignación de frecuencias y tipos de onda según el botón
+            if (tipo === 'menu') {
+                oscillator.type = 'triangle';
+                oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.05);
+            } else if (tipo === 'contraste') {
+                oscillator.type = 'square';
+                oscillator.frequency.setValueAtTime(300, audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.1);
+            } else if (tipo === 'iniciar') {
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(400, audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.1);
+            } else if (tipo === 'ppdac') {
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(1000, audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(900, audioCtx.currentTime + 0.05);
+            } else {
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.05);
+            }
             
-            gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); // Volumen suave
-            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+            gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            // Hacer que los sonidos de inicio y contraste duren un poco más
+            let duracion = (tipo === 'contraste' || tipo === 'iniciar') ? 0.1 : 0.05;
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duracion);
             
             oscillator.connect(gainNode);
             gainNode.connect(audioCtx.destination);
             
             oscillator.start();
-            oscillator.stop(audioCtx.currentTime + 0.05);
+            oscillator.stop(audioCtx.currentTime + duracion);
         }
 
-        // Agregar evento de clic a todos los botones
         document.addEventListener('DOMContentLoaded', () => {
+            // Asignar el tipo de sonido a cada botón automáticamente por su clase
             document.querySelectorAll('button').forEach(btn => {
-                btn.addEventListener('click', reproducirClic);
+                btn.addEventListener('click', () => {
+                    let tipoSonido = 'default';
+                    if (btn.classList.contains('menu-btn')) tipoSonido = 'menu';
+                    else if (btn.classList.contains('btn-theme')) tipoSonido = 'contraste';
+                    else if (btn.classList.contains('btn-action')) tipoSonido = 'iniciar';
+                    else if (btn.classList.contains('btn-ppdac')) tipoSonido = 'ppdac';
+                    
+                    reproducirClic(tipoSonido);
+                });
             });
-            actualizarBoxplot(); // Inicializa el gráfico
+            actualizarBoxplot();
         });
+
+        // --- FUNCION EVALUAR PRE-TEST ---
+        function evaluarPreTest() {
+            let puntaje = 0;
+            if(document.getElementById('pre1').value === 'b') puntaje++;
+            if(document.getElementById('pre2').value === 'f') puntaje++;
+            
+            let p3 = document.getElementById('pre3').value.trim().toUpperCase();
+            if(p3 === 'MÁQUINA A' || p3 === 'MAQUINA A' || p3 === 'A') puntaje++;
+            
+            if(document.getElementById('pre4').value === 'a') puntaje++;
+            if(document.getElementById('pre5a').value === 'rango' && document.getElementById('pre5b').value === 'desviacion') puntaje++;
+            if(document.getElementById('pre6_1').value === '1' && document.getElementById('pre6_2').value === '2' && document.getElementById('pre6_3').value === '3' && document.getElementById('pre6_4').value === '4') puntaje++;
+            if(document.getElementById('pre7').value === 'v') puntaje++;
+            if(document.getElementById('pre8').value === 'b') puntaje++;
+            
+            let p9 = document.getElementById('pre9').value.trim().toLowerCase();
+            if(p9 === '0' || p9 === 'cero') puntaje++;
+            
+            if(document.getElementById('pre10').value === 'a') puntaje++;
+            if(document.getElementById('pre11').value === 'v') puntaje++;
+            if(document.getElementById('pre12').value === 'a') puntaje++;
+
+            let feedback = document.getElementById('pretest-feedback');
+            if(puntaje === 12) {
+                feedback.style.color = "var(--success)";
+                feedback.innerText = "¡Impresionante! Tienes un dominio conceptual excelente de la dispersión (12/12). Estás listo para ser un investigador estadístico.";
+            } else if (puntaje >= 8) {
+                feedback.style.color = "#eab308";
+                feedback.innerText = `Muy buen intento. Obtuviste ${puntaje} de 12 puntos. Tienes buenas bases intuitivas para arrancar la investigación.`;
+            } else {
+                feedback.style.color = "var(--danger)";
+                feedback.innerText = `Obtuviste ${puntaje} de 12. ¡No te desanimes! Justamente para eso es este diagnóstico. Aprovecha el ciclo PPDAC para interiorizar estos conceptos.`;
+            }
+        }
 
         // --- NAVEGACIÓN PRINCIPAL ---
         function mostrarSeccion(seccion, botonRef) {
@@ -832,16 +935,53 @@
             botonRef.classList.add('active');
 
             if(seccion === 'que-haremos') {
-                display.innerHTML = '<h2>Investigación Estadística Aplicada</h2><p>En este proyecto, asumirán el rol de analistas de datos para resolver una problemática real utilizando el rigor del <strong>Ciclo de Investigación PPDAC</strong>. No se trata simplemente de aplicar fórmulas de manera mecánica; el verdadero desafío radicará en estructurar adecuadamente el problema, procesar la información y emitir juicios críticos sobre el comportamiento de los datos.</p><p>El análisis se centrará en el estudio de las <strong>Medidas de Dispersión</strong> (Rango, Varianza, Desviación Estándar y Coeficiente de Variación). Estas métricas nos permitirán comprender el nivel de variabilidad, homogeneidad y riesgo en un conjunto de datos, competencias fundamentales para la toma de decisiones en ciencias, ingeniería y economía.</p>';
+                // MODIFICACIÓN 1: Injectar los botones debajo de "Investigación Estadística Aplicada"
+                display.innerHTML = '<h2>Investigación Estadística Aplicada</h2>' + 
+                    '<p>En este proyecto, asumirán el rol de analistas de datos para resolver una problemática real utilizando el rigor del <strong>Ciclo de Investigación PPDAC</strong>. No se trata simplemente de aplicar fórmulas de manera mecánica; el verdadero desafío radicará en estructurar adecuadamente el problema, procesar la información y emitir juicios críticos sobre el comportamiento de los datos.</p>' +
+                    '<div class="ppdac-bar" style="padding:1rem 0 1.5rem 0; flex-wrap:wrap; background: transparent; border:none; box-shadow:none;">' +
+                        '<button class="btn-ppdac" onclick="abrirModalPPDAC(\'Problema\')">1. Problema</button>' +
+                        '<button class="btn-ppdac" onclick="abrirModalPPDAC(\'Plan\')">2. Plan</button>' +
+                        '<button class="btn-ppdac" onclick="abrirModalPPDAC(\'Datos\')">3. Datos</button>' +
+                        '<button class="btn-ppdac" onclick="abrirModalPPDAC(\'Análisis\')">4. Análisis</button>' +
+                        '<button class="btn-ppdac" onclick="abrirModalPPDAC(\'Conclusión\')">5. Conclusión</button>' +
+                    '</div>' +
+                    '<p>El análisis se centrará en el estudio de las <strong>Medidas de Dispersión</strong> (Rango, Varianza, Desviación Estándar y Coeficiente de Variación). Estas métricas nos permitirán comprender el nivel de variabilidad, homogeneidad y riesgo en un conjunto de datos, competencias fundamentales para la toma de decisiones en ciencias, ingeniería y economía.</p>';
             } else if (seccion === 'objetivos') {
                 display.innerHTML = '<h2>Objetivos de Aprendizaje (Nivel Medio)</h2><ul style="margin-left: 20px; line-height: 1.8;"><li>Estructurar investigaciones estadísticas siguiendo las 5 fases del ciclo PPDAC.</li><li>Diferenciar conceptual y operativamente las medidas de tendencia central de las medidas de dispersión.</li><li>Procesar conjuntos de datos robustos empleando software estadístico especializado.</li><li>Interpretar la Desviación Estándar y el Coeficiente de Variación para emitir diagnósticos sobre la homogeneidad poblacional.</li></ul>';
             } else if (seccion === 'video-jamovi') {
-                // SECCIÓN NUEVA: VIDEO DE JAMOVI
+                // MODIFICACIÓN 5: Botón de YouTube Centrado
                 display.innerHTML = '<h2>Explorando la interfaz de Jamovi</h2>' +
                                     '<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 1.5rem;">' +
                                     '<iframe src="https://www.youtube.com/embed?listType=search&list=Explorando+la+interfaz+de+jamovi" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>' +
                                     '</div>' +
-                                    '<p>Observa detenidamente este tutorial. Reconocer las opciones del menú superior y el panel de variables te permitirá, en la Fase 3, calcular rápidamente las medidas de dispersión y construir el Diagrama de Caja.</p>';
+                                    '<p>Observa detenidamente este tutorial. Reconocer las opciones del menú superior y el panel de variables te permitirá, en la Fase 3, calcular rápidamente las medidas de dispersión y construir el Diagrama de Caja.</p>' +
+                                    '<div style="text-align: center; margin-top: 2rem;">' +
+                                        '<a href="https://www.youtube.com/results?search_query=Explorando+la+interfaz+de+jamovi" target="_blank" style="display: inline-block; background-color: #FF0000; color: white; padding: 12px 24px; font-weight: bold; text-decoration: none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;">▶️ Ver "Explorando la interfaz de jamovi" en YouTube</a>' +
+                                    '</div>';
+            } else if (seccion === 'pre-test') {
+                // Pre-test original (abreviado visualmente pero manteniendo tu código exacto)
+                display.innerHTML = `
+                    <h2>Pre-Test: Intuición Estadística</h2>
+                    <p>Antes de aplicar fórmulas, validemos nuestra capacidad crítica frente a los datos del mundo real. Responde el siguiente cuestionario diagnóstico.</p>
+                    <div class="test-container">
+                        <div class="test-q"><p><strong>1. Selección Múltiple:</strong> Un equipo de ciclistas evalúa sus tiempos de llegada. El más rápido hace la ruta en 45 min y el más lento en 65 min. ¿Qué nos indica matemáticamente este "Rango" de 20 minutos?</p><select id="pre1"><option value="">Selecciona tu deducción...</option><option value="a">Que todos los corredores tardan aproximadamente 20 minutos en llegar.</option><option value="b">Que la distancia máxima o diferencia de tiempo entre el primero y el último es de 20 minutos.</option><option value="c">Que el promedio de velocidad del equipo genera rutas de 20 minutos.</option></select></div>
+                        <div class="test-q"><p><strong>2. Falso/Verdadero:</strong> Si dos salones de clase obtienen exactamente un promedio general de 75/100 en matemáticas, significa obligatoriamente que ambos grupos tienen el mismo nivel de desigualdad educativa interna.</p><select id="pre2"><option value="">Selecciona tu postura...</option><option value="v">Verdadero (El promedio lo dice todo)</option><option value="f">Falso (La dispersión podría ser muy distinta en cada salón)</option></select></div>
+                        <div class="test-q"><p><strong>3. Completar:</strong> Una máquina industrial fabrica tuercas. La máquina A produce con una Desviación Estándar de 0.1 mm, mientras la máquina B lo hace con 2.5 mm. La máquina más consistente, predecible y segura para el ensamblaje es la _____.</p><input type="text" id="pre3" placeholder="Escribe Máquina A o Máquina B..." oninput="this.value = this.value.toUpperCase()"></div>
+                        <div class="test-q"><p><strong>4. Selección Múltiple:</strong> Como docente, notas que el Coeficiente de Variación (CV) de las notas finales de tu grupo de grado décimo es del apenas 4%. ¿Qué puedes interpretar pedagógicamente sobre este grupo?</p><select id="pre4"><option value="">Selecciona tu deducción...</option><option value="a">Es un grupo altamente homogéneo; el nivel de conocimiento es muy parejo entre todos.</option><option value="b">Es un grupo crítico y heterogéneo; hay estudiantes brillantes y otros con graves deficiencias.</option><option value="c">Significa que el 4% de la clase va a reprobar irremediablemente.</option></select></div>
+                        <div class="test-q"><p><strong>5. Emparejamiento:</strong> Relaciona cada contexto cotidiano con la medida estadística que mejor lo modela.</p><ul class="match-list"><li><span>La diferencia monetaria entre el salario del gerente y el del operario raso.</span><select id="pre5a"><option value="">Pertenece a...</option><option value="rango">El Rango</option><option value="media">El Promedio</option></select></li><li><span>Cuánto se alejan (varían) habitualmente las temperaturas del mediodía respecto al clima central de tu ciudad.</span><select id="pre5b"><option value="">Pertenece a...</option><option value="desviacion">La Desviación Estándar</option><option value="moda">La Moda</option></select></li></ul></div>
+                        <div class="test-q"><p><strong>6. Ordenar Lógicamente:</strong> Ordena cronológicamente los 4 pasos mentales para calcular la Varianza (es decir, el promedio de las distancias al cuadrado).</p><select id="pre6_1" style="margin-bottom:5px;"><option value="">Paso 1...</option><option value="1">Calcular el centro de gravedad o promedio general de los datos.</option><option value="2">Calcular la distancia de cada dato individual hasta ese promedio.</option><option value="3">Elevar al cuadrado esas distancias (para que las negativas se vuelvan positivas).</option><option value="4">Promediar todas esas distancias al cuadrado resultantes.</option></select><select id="pre6_2" style="margin-bottom:5px;"><option value="">Paso 2...</option><option value="1">Calcular el centro de gravedad o promedio general de los datos.</option><option value="2">Calcular la distancia de cada dato individual hasta ese promedio.</option><option value="3">Elevar al cuadrado esas distancias (para que las negativas se vuelvan positivas).</option><option value="4">Promediar todas esas distancias al cuadrado resultantes.</option></select><select id="pre6_3" style="margin-bottom:5px;"><option value="">Paso 3...</option><option value="1">Calcular el centro de gravedad o promedio general de los datos.</option><option value="2">Calcular la distancia de cada dato individual hasta ese promedio.</option><option value="3">Elevar al cuadrado esas distancias (para que las negativas se vuelvan positivas).</option><option value="4">Promediar todas esas distancias al cuadrado resultantes.</option></select><select id="pre6_4"><option value="">Paso 4...</option><option value="1">Calcular el centro de gravedad o promedio general de los datos.</option><option value="2">Calcular la distancia de cada dato individual hasta ese promedio.</option><option value="3">Elevar al cuadrado esas distancias (para que las negativas se vuelvan positivas).</option><option value="4">Promediar todas esas distancias al cuadrado resultantes.</option></select></div>
+                        <div class="test-q"><p><strong>7. Falso/Verdadero:</strong> El trayecto en Transmetro a tu colegio suele tomar entre 20 y 25 minutos todo el mes. Pero hoy hubo un paro enorme y el trayecto tomó 190 minutos (más de 3 horas). Este único "valor atípico" arruinará violentamente el Rango mensual, haciéndolo parecer engañosamente enorme (170 min de amplitud).</p><select id="pre7"><option value="">Selecciona tu postura...</option><option value="v">Verdadero (El Rango es extremadamente sensible a los atípicos aislados)</option><option value="f">Falso (El Rango ignora los accidentes aislados)</option></select></div>
+                        <div class="test-q"><p><strong>8. Selección Múltiple:</strong> En el proceso matemático de la dispersión, ¿por qué es estrictamente necesario elevar las distancias al cuadrado para obtener la Varianza?</p><select id="pre8"><option value="">Selecciona tu justificación...</option><option value="a">Es un capricho estético para que los números decimales se vean más grandes e impactantes en la gráfica.</option><option value="b">Para evitar que las distancias negativas (los que están por debajo del promedio) se cancelen con las positivas, causando una suma igual a cero.</option><option value="c">Porque Pitágoras estableció que toda medida estadística debe regirse por el cuadrado de la hipotenusa.</option></select></div>
+                        <div class="test-q"><p><strong>9. Completar:</strong> Si medimos las edades de un equipo de natación infantil conformado exclusivamente por quintillizos donde absolutamente TODOS tienen de manera exacta 12 años y 1 mes. La dispersión y desviación estándar general será exactamente _____.</p><input type="text" id="pre9" placeholder="Escribe el número matemático esperado..."></div>
+                        <div class="test-q"><p><strong>10. Selección Múltiple:</strong> Eres un inversor en Colombia. Las acciones petroleras "Alfa" rinden 8% anual con una volatilidad (desviación) del 15%. Las acciones alimenticias "Beta" rinden 8% anual con desviación de apenas 2%. Si quieres asegurar el capital de retiro de tu familia evitando sustos, inviertes en:</p><select id="pre10"><option value="">Selecciona tu estrategia financiera...</option><option value="a">Empresa Beta (Menor riesgo e incertidumbre, es predecible).</option><option value="b">Empresa Alfa (Mayor dispersión es igual a mayor garantía de dinero).</option></select></div>
+                        <div class="test-q"><p><strong>11. Falso/Verdadero:</strong> Si el gobierno decreta un aumento de $100.000 pesitos por igual a TODOS los empleados de una compañía sin excepción, la dispersión o brecha de desigualdad económica entre el obrero y el gerente no sufre ningún cambio (es decir, la Desviación Estándar se mantiene idéntica al mes anterior).</p><select id="pre11"><option value="">Selecciona tu postura...</option><option value="v">Verdadero (Sumar constantes traslada los datos, pero no los separa más entre sí)</option><option value="f">Falso (El aumento altera toda la variabilidad de la empresa)</option></select></div>
+                        <div class="test-q"><p><strong>12. Selección Múltiple:</strong> Tienes un examen de Estado clave a las 7:00 AM. La Ruta A tiene un tiempo de tránsito promedio de 35 min pero con desviación de solo 3 min. La Ruta B promedia 25 min pero su desviación es de 22 min (a veces vuela, a veces colapsa). Para garantizar que llegarás a tiempo y no perderás el examen, eliges:</p><select id="pre12"><option value="">Selecciona tu decisión logística...</option><option value="a">Ruta A (Aunque el promedio sea mayor, la baja dispersión asegura puntualidad precisa).</option><option value="b">Ruta B (Al tener un promedio menor, es la opción infalible estadísticamente).</option></select></div>
+                        <div style="margin-top: 1.5rem; text-align: right; background: var(--bg-color); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border);">
+                            <div id="pretest-feedback" class="feedback" style="margin-bottom: 1rem; text-align: left;"></div>
+                            <button class="btn btn-action" onclick="evaluarPreTest()">Validar Conocimientos Previos ➔</button>
+                        </div>
+                    </div>
+                `;
             } else {
                 display.innerHTML = '<h2>Alineación Curricular (Colombia)</h2><p><strong>Estándar Básico de Competencias (10° a 11°):</strong><br>Resuelvo y formulo problemas que requieran el uso de medidas de tendencia central y de dispersión.</p><p><strong>Derecho Básico de Aprendizaje (DBA V.2 - Grado 10, N° 9):</strong><br>Propone un diseño estadístico adecuado para resolver preguntas que indagan por la comparación sobre las distribuciones de dos grupos de datos, para lo cual usa comprensivamente diagramas de caja, medidas de tendencia central, de variación y de localización.</p><p><strong>Evidencia de Aprendizaje:</strong><br>Justifica las decisiones tomadas basándose en el análisis del coeficiente de variación y la amplitud mostrada en representaciones gráficas.</p>';
             }
@@ -861,7 +1001,7 @@
         }
 
         function irAInicio() {
-            erroresFase = { fase1: 0, fase2: 0, fase3: 0, fase4: 0 }; // Reiniciar puntajes
+            erroresFase = { fase1: 0, fase2: 0, fase3: 0, fase4: 0 }; 
             navegarFase('inicio');
             document.querySelectorAll('select').forEach(sel => sel.value = "");
             document.querySelectorAll('.feedback').forEach(f => f.innerText = "");
@@ -900,7 +1040,7 @@
                 let div = document.createElement('div');
                 div.className = 'word-tile';
                 div.innerText = palabra;
-                div.onclick = function() { moverPalabra(this); };
+                div.onclick = function() { moverPalabra(this); reproducirClic(); };
                 banco.appendChild(div);
             });
         }
@@ -931,7 +1071,7 @@
                 feedback.innerText = "¡Excelente! Pregunta estructurada con rigor estadístico.";
                 setTimeout(() => navegarFase('fase2'), 1500);
             } else {
-                erroresFase.fase1++; // Aumenta contador de errores
+                erroresFase.fase1++; 
                 feedback.style.color = "var(--danger)";
                 feedback.innerText = "Error. Revisa la coherencia o elimina distractores conceptuales.";
             }
@@ -995,26 +1135,22 @@
             let q3 = parseInt(document.getElementById('bp-q3').value);
             let max = parseInt(document.getElementById('bp-max').value);
 
-            // Validar lógica del Boxplot
             if(q1 < min) q1 = min;
             if(med < q1) med = q1;
             if(q3 < med) q3 = med;
             if(max < q3) max = q3;
 
-            // Actualizar inputs si fueron modificados por validación
             document.getElementById('bp-q1').value = q1;
             document.getElementById('bp-med').value = med;
             document.getElementById('bp-q3').value = q3;
             document.getElementById('bp-max').value = max;
 
-            // Actualizar textos
             document.getElementById('val-min').innerText = min;
             document.getElementById('val-q1').innerText = q1;
             document.getElementById('val-med').innerText = med;
             document.getElementById('val-q3').innerText = q3;
             document.getElementById('val-max').innerText = max;
 
-            // Renderizar gráfico CSS
             document.getElementById('bp-whisker-min').style.left = `calc(${min}% - 1.5px)`;
             document.getElementById('bp-whisker-max').style.left = `calc(${max}% - 1.5px)`;
             
@@ -1034,8 +1170,6 @@
             let q1 = document.getElementById('p4_q1').value;
             let texto = document.getElementById('p4_text').value.trim();
             let feedback = document.getElementById('feedback-fase4');
-
-            // Valores de Jamovi a verificar (opcionalmente podríamos obligar a que el gráfico esté exacto, pero evaluaremos las respuestas escritas para no trabar al estudiante)
             
             if(q1 === "" || texto.length < 20) {
                 feedback.style.color = "var(--danger)";
@@ -1049,13 +1183,11 @@
                 return;
             }
 
-            // Preparar el reporte final con los porcentajes
             document.getElementById('score-fase1').innerText = calcularPorcentaje(erroresFase.fase1) + "%";
             document.getElementById('score-fase2').innerText = calcularPorcentaje(erroresFase.fase2) + "%";
             document.getElementById('score-fase3').innerText = calcularPorcentaje(erroresFase.fase3) + "%";
             document.getElementById('score-fase4').innerText = calcularPorcentaje(erroresFase.fase4) + "%";
 
-            // Colorear etiquetas de porcentaje dependiendo del puntaje
             ['score-fase1', 'score-fase2', 'score-fase3', 'score-fase4'].forEach((id, index) => {
                 let errVal = Object.values(erroresFase)[index];
                 let bg = errVal === 0 ? 'var(--success)' : (errVal === 1 ? '#eab308' : 'var(--danger)');
@@ -1067,7 +1199,6 @@
             setTimeout(() => navegarFase('fase5'), 2000);
         }
 
-        // Inicializar
         window.onload = function() {
             inicializarFase1();
         };
