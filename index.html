@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <strong>Exploradores de Datos:</strong> 
-  <span style="font-weight: normal; font-size: 0.8em; opacity: 0.9;">investigación estadística aplicada</span>
+    <title>Exploradores de Datos:</title>
     <style>
         :root {
             --primary: #1e3a8a; /* Deep Blue */
@@ -485,8 +484,8 @@
     <button class="btn-theme" onclick="toggleTheme()" title="Cambiar Contraste">🌓</button>
 
     <header>
-        <button class="btn btn-home" onclick="confirmarInicio()">🏠 HOME</button>
-        <div class="header-title">Detectives de Datos</div>
+        <button class="btn btn-home" onclick="confirmarInicio()">📊 HOME</button>
+        <div class="header-title">Exploradores de Datos</div>
         <button class="btn btn-action" onclick="navegarFase('fase1')">Iniciar Investigación ➔</button>
     </header>
 
@@ -500,11 +499,11 @@
                     <button class="menu-btn" onclick="mostrarSeccion('objetivos', this)">📝 Objetivos de Aprendizaje</button>
                     <button class="menu-btn" onclick="mostrarSeccion('estandares', this)">📐 Estándares y DBA (Colombia)</button>
                     <button class="menu-btn" onclick="mostrarSeccion('pre-test', this)">🧠 Conocimientos previos</button>
-                    <button class="menu-btn" onclick="mostrarSeccion('video-jamovi', this)">📺 Tutorial Jamovi</button>
+                    <button class="menu-btn" onclick="mostrarSeccion('video-jamovi', this)">🌐 Tutorial Jamovi</button>
                 </div>
                 
                 <div class="right-content" id="info-display">
-                    <h2>Descripción del Proyecto de Investigación</h2>
+                    <h2>Descripción de l actividad</h2>
                     <p>En este proyecto, asumirán el rol de analistas de datos para resolver una problemática real utilizando el rigor del <strong>Ciclo de Investigación PPDAC</strong>. No se trata simplemente de aplicar fórmulas de manera mecánica; el verdadero desafío radicará en estructurar adecuadamente el problema, procesar la información y emitir juicios críticos sobre el comportamiento de los datos.</p>
                     
                     <!-- MODIFICACIÓN 1: Botones reubicados debajo del texto de introducción -->
@@ -816,7 +815,7 @@
     </div>
 
     <footer>
-        <p><strong>Diseño de actividades:</strong> Fabián Díaz, Jesús De Arcos, Joshua Guadagno | <strong>Desarrollador</strong> David Beleño </p>
+        <p><strong>Desarrolladores:</strong> Fabián Díaz, Jesús De Arcos, Joshua Guadagno | <strong>Diseño de actividades:</strong> David Beleño</p>
     </footer>
 
     <script>
@@ -948,7 +947,7 @@
                     '</div>' +
                     '<p>El análisis se centrará en el estudio de las <strong>Medidas de Dispersión</strong> (Rango, Varianza, Desviación Estándar y Coeficiente de Variación). Estas métricas nos permitirán comprender el nivel de variabilidad, homogeneidad y riesgo en un conjunto de datos, competencias fundamentales para la toma de decisiones en ciencias, ingeniería y economía.</p>';
             } else if (seccion === 'objetivos') {
-                display.innerHTML = '<h2>Objetivos de Aprendizaje</h2><ul style="margin-left: 20px; line-height: 1.8;"><li>Estructurar investigaciones estadísticas siguiendo las 5 fases del ciclo PPDAC.</li><li>Diferenciar conceptual y operativamente las medidas de tendencia central de las medidas de dispersión.</li><li>Procesar conjuntos de datos robustos empleando software estadístico especializado.</li><li>Interpretar la Desviación Estándar y el Coeficiente de Variación para emitir diagnósticos sobre la homogeneidad poblacional.</li></ul>';
+                display.innerHTML = '<h2>Objetivos de Aprendizaje (Nivel Medio)</h2><ul style="margin-left: 20px; line-height: 1.8;"><li>Estructurar investigaciones estadísticas siguiendo las 5 fases del ciclo PPDAC.</li><li>Diferenciar conceptual y operativamente las medidas de tendencia central de las medidas de dispersión.</li><li>Procesar conjuntos de datos robustos empleando software estadístico especializado.</li><li>Interpretar la Desviación Estándar y el Coeficiente de Variación para emitir diagnósticos sobre la homogeneidad poblacional.</li></ul>';
             } else if (seccion === 'video-jamovi') {
                 // MODIFICACIÓN 5: Botón de YouTube Centrado
                 display.innerHTML = '<h2>Explorando la interfaz de Jamovi</h2>' +
