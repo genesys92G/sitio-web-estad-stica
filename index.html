@@ -466,29 +466,13 @@
                     <!-- NUEVO BOTÓN: VIDEO YOUTUBE JAMOVI -->
                     <button class="menu-btn" onclick="mostrarSeccion('video-jamovi', this)">📺 Tutorial Jamovi</button>
                 </div>
-                <!-- Contenedor principal donde se mostrará el contenido -->
-<div class="right-content" id="info-display">
-    
-    <!-- Este div contiene el texto inicial -->
-    <div id="que-haremos">
-        <h2>Investigación Estadística Aplicada</h2>
-        <p>En este proyecto, asumirán el rol de analistas de datos...</p>
-        <p>El análisis se centrará en el estudio de las <strong>Medidas de Dispersión</strong>...</p>
-    </div>
-
-    <!-- Este es el contenedor para el video, vinculado al id del botón -->
-    <div id="video-jamovi" style="display:none;">
-        <h2>Tutorial Jamovi</h2>
-        <iframe width="560" height="315" 
-            src="https://www.youtube.com/embed/EIq113UYBnI?si=atvvBWYLSBbNtYcw" 
-            title="YouTube video player" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            referrerpolicy="strict-origin-when-cross-origin" 
-            allowfullscreen>
-        </iframe>
-    </div>
-</div>
+                <div class="right-content" id="info-display">
+                    <h2>Investigación Estadística Aplicada</h2>
+                    <p>En este proyecto, asumirán el rol de analistas de datos para resolver una problemática real utilizando el rigor del <strong>Ciclo de Investigación PPDAC</strong>. No se trata simplemente de aplicar fórmulas de manera mecánica; el verdadero desafío radicará en estructurar adecuadamente el problema, procesar la información y emitir juicios críticos sobre el comportamiento de los datos.</p>
+                    <p>El análisis se centrará en el estudio de las <strong>Medidas de Dispersión</strong> (Rango, Varianza, Desviación Estándar y Coeficiente de Variación). Estas métricas nos permitirán comprender el nivel de variabilidad, homogeneidad y riesgo en un conjunto de datos, competencias fundamentales para la toma de decisiones en ciencias, ingeniería y economía.</p>
+                </div>
+            </div>
+            
             <div class="ppdac-bar">
                 <button class="btn-ppdac" onclick="abrirModalPPDAC('Problema')">1. Problema</button>
                 <button class="btn-ppdac" onclick="abrirModalPPDAC('Plan')">2. Plan</button>
@@ -855,7 +839,7 @@
                 // SECCIÓN NUEVA: VIDEO DE JAMOVI
                 display.innerHTML = '<h2>Explorando la interfaz de Jamovi</h2>' +
                                     '<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 1.5rem;">' +
-                                    '<iframe src="https://www.youtube.com/embed?listType=search&list=Explorando+la+interfaz+de+jamovi" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>' +
+                                    '<iframe src="https://www.youtube.com/watch?v=EIq113UYBnI&t=3s" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>' +
                                     '</div>' +
                                     '<p>Observa detenidamente este tutorial. Reconocer las opciones del menú superior y el panel de variables te permitirá, en la Fase 3, calcular rápidamente las medidas de dispersión y construir el Diagrama de Caja.</p>';
             } else {
