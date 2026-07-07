@@ -607,20 +607,41 @@
             });
         }
 
-        function verificarRecoleccion() {
-            if(estadoT2) return mostrarModal("Ya completado", "Esta fase ya la habías superado con éxito.", true);
-            let correcto = true;
-            for(let k in elementos) {
-                if(document.getElementById('zone-' + k).children.length !== elementos[k]) correcto = false;
-            }
-            if(correcto) {
-                estadoT2 = true;
-                mostrarModal("¡Clasificación Perfecta!", "Lograste organizar las 40 muestras biológicas correctamente. Pasa a la siguiente pestaña.", true);
-            } else {
-                errT2++;
-                mostrarModal("Hay un error...", "Revisa la lectura inicial en la pestaña 1. Algunas cantidades no cuadran con lo que recolectaron los Eco-Exploradores.", false);
+function verificarRecoleccion() {
+    if(estadoT2) return mostrarModal("Ya completado", "Esta fase ya la habías superado con éxito.", true);
+    
+    let hayErrorTipo = false;
+    let hayErrorCantidad = false;
+
+    for(let k in elementos) {
+        const zona = document.getElementById('zone-' + k);
+        const items = zona.children;
+        
+        // 1. Verificamos si la cantidad de elementos es la correcta
+        if(items.length !== elementos[k]) {
+            hayErrorCantidad = true;
+        }
+        
+        // 2. Verificamos si la figura (tipo) corresponde al contenedor
+        for(let i = 0; i < items.length; i++) {
+            if(items[i].dataset.tipo !== k) {
+                hayErrorTipo = true;
             }
         }
+    }
+
+    // 3. Evaluamos los resultados para dar retroalimentación precisa
+    if (!hayErrorTipo && !hayErrorCantidad) {
+        estadoT2 = true;
+        mostrarModal("¡Clasificación Perfecta!", "Lograste organizar las 40 muestras biológicas en su lugar correcto. Pasa a la siguiente pestaña.", true);
+    } else if (hayErrorTipo) {
+        errT2++;
+        mostrarModal("Figuras incorrectas ❌", "¡Cuidado! Has colocado figuras en un contenedor que no les corresponde. Asegúrate de que cada especie esté en su cuadro y no se mezclen, aunque la cantidad parezca correcta.", false);
+    } else {
+        errT2++;
+        mostrarModal("Cantidades incorrectas ❌", "Las figuras están en sus contenedores correctos (no hay mezclas), pero las cantidades no cuadran. Revisa la lectura en la pestaña 1 para saber cuántas recolectaron de cada una.", false);
+    }
+}
 
         // --- LÓGICA TAB 3: TABLA ---
         function verificarTabla() {
