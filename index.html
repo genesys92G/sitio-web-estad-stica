@@ -81,17 +81,6 @@
             border-radius: 20px;
         }
 
-        .music-select {
-            padding: 8px;
-            border-radius: 10px;
-            border: 2px solid var(--primary);
-            font-size: 0.95rem;
-            background-color: var(--container-bg);
-            color: var(--text-color);
-            outline: none;
-            cursor: pointer;
-        }
-
         .icon-btn {
             background-color: var(--accent);
             border: none;
@@ -269,11 +258,6 @@
         <div class="header">
             <h1>🌿 Eco-Exploradores: Misión Biodiversidad</h1>
             <div class="controls-header">
-                <select id="bg-music-select" class="music-select" onchange="cambiarMusica()" title="Seleccionar pista">
-                    <option value="naturaleza">🌳 Bosque Tropical</option>
-                    <option value="rio">💧 Río Relajante</option>
-                    <option value="instrumental">🌧️ Lluvia Suave</option>
-                </select>
                 <button class="icon-btn" id="musicBtn" onclick="toggleMusica()" title="Activar/Desactivar Música">🔇</button>
                 <button class="icon-btn" id="themeBtn" onclick="cambiarModo()" title="Cambiar Tema (Claro/Oscuro)">🌙</button>
             </div>
@@ -463,20 +447,13 @@
         Recurso Educativo Abierto | Desarrollador: David Beleño
     </footer>
 
-    <audio id="bg-audio" loop></audio>
+    <audio id="bg-audio" src="Nature.mp3" loop></audio>
 
     <script>
-        // --- SISTEMA DE AUDIO (Efectos y Fondo Mejorado) ---
+        // --- SISTEMA DE AUDIO (Efectos y Fondo) ---
         let audioCtx = null;
         let audioFondo = null;
         let isPlayingFondo = false;
-
-        // Pistas de audio actualizadas a MP3 más fiables (Hotlinks estables)
-        const pistasAudio = {
-            naturaleza: "https://www.soundjay.com/nature/sounds/forest-birds-1.mp3",
-            rio: "https://www.soundjay.com/nature/sounds/river-2.mp3",
-            instrumental: "https://www.soundjay.com/nature/sounds/rain-01.mp3" 
-        };
 
         function iniciarAudio() {
             if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -486,11 +463,7 @@
 
         function initBackgroundAudio() {
             if (!audioFondo) {
-                // Ahora controlamos el elemento HTML <audio> en lugar del inestable 'new Audio()'
                 audioFondo = document.getElementById('bg-audio');
-                if(!audioFondo.src) {
-                    audioFondo.src = pistasAudio[document.getElementById('bg-music-select').value];
-                }
                 audioFondo.volume = 0.25; // Volumen suave
             }
         }
@@ -498,27 +471,19 @@
         function toggleMusica() {
             initBackgroundAudio();
             const btn = document.getElementById('musicBtn');
+            
             if (isPlayingFondo) {
                 audioFondo.pause();
                 isPlayingFondo = false;
                 btn.innerText = '🔇';
             } else {
-                audioFondo.play().catch(e => console.log("Navegador bloquea autoplay: ", e));
-                isPlayingFondo = true;
-                btn.innerText = '🔊';
-            }
-        }
-
-        function cambiarMusica() {
-            initBackgroundAudio();
-            const nuevaPista = pistasAudio[document.getElementById('bg-music-select').value];
-            const estabaReproduciendo = !audioFondo.paused;
-            
-            audioFondo.src = nuevaPista;
-            audioFondo.load(); // Forzar al navegador a cargar la nueva pista
-            
-            if (estabaReproduciendo) {
-                audioFondo.play();
+                audioFondo.play().then(() => {
+                    isPlayingFondo = true;
+                    btn.innerText = '🔊';
+                }).catch(e => {
+                    console.log("El navegador bloqueó la reproducción: ", e);
+                    alert("Haz clic en la página una vez antes de reproducir el sonido para que el navegador lo permita.");
+                });
             }
         }
 
