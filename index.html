@@ -465,22 +465,29 @@
 
     <audio id="bg-audio" loop></audio>
 
-// --- SISTEMA DE AUDIO CORREGIDO ---
+    <script>
+        // --- INICIO DE LÓGICA DE AUDIO Y EFECTOS ---
+let audioCtx = null;
 const audioFondo = document.getElementById('bg-audio');
 const musicBtn = document.getElementById('musicBtn');
 const selectorMusica = document.getElementById('bg-music-select');
 
-// Lista de archivos locales (asegúrate de que los nombres coincidan exactamente)
 const archivos = {
     naturaleza: "tranquilidad.mp3",
     rio: "rio.mp3",
-    instrumental: "instrumental.mp3"
+    instrumental: "lluvia.mp3"
 };
 
-// Función para alternar reproducción
+function iniciarAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    if (!audioFondo.src) audioFondo.src = archivos[selectorMusica.value];
+}
+
 function toggleMusica() {
+    iniciarAudio();
     if (audioFondo.paused) {
-        audioFondo.play().catch(e => console.error("Error al reproducir:", e));
+        audioFondo.play().catch(e => console.error(e));
         musicBtn.innerText = '🔊';
     } else {
         audioFondo.pause();
@@ -488,26 +495,27 @@ function toggleMusica() {
     }
 }
 
-// Función para cambiar la pista desde el selector
 function cambiarMusica() {
-    const nuevaPista = archivos[selectorMusica.value];
-    const estabaSonando = !audioFondo.paused;
-    
-    audioFondo.src = nuevaPista;
+    audioFondo.src = archivos[selectorMusica.value];
     audioFondo.load();
-    
-    if (estabaSonando) {
-        audioFondo.play().catch(e => console.error("Error al cambiar:", e));
-    }
+    if (musicBtn.innerText === '🔊') audioFondo.play();
 }
 
-// Inicialización al hacer clic
-document.body.addEventListener('click', () => {
-    // Esto asegura que el audio esté listo para sonar tras la primera interacción
-    if (audioFondo.src === "") {
-        audioFondo.src = archivos[selectorMusica.value];
-    }
-}, { once: true });
+function emitirSonido(tipo) {
+    if (!audioCtx) return;
+    let osc = audioCtx.createOscillator();
+    let gain = audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    let freqs = tipo === 'exito' ? [523, 659, 783] : [150, 100];
+    freqs.forEach((f, i) => osc.frequency.setValueAtTime(f, audioCtx.currentTime + (i * 0.1)));
+    gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+}
+
+document.body.addEventListener('click', iniciarAudio, { once: true });
+// --- FIN DE LÓGICA DE AUDIO ---
+        }
 
         // --- SISTEMA DE PUNTUACIÓN (Errores) ---
         let errT2 = 0, errT3 = 0, errT4 = 0, errT5 = 0;
