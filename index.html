@@ -465,98 +465,49 @@
 
     <audio id="bg-audio" loop></audio>
 
-    <script>
-        // --- SISTEMA DE AUDIO (Efectos y Fondo Mejorado) ---
-        let audioCtx = null;
-        let audioFondo = null;
-        let isPlayingFondo = false;
+// --- SISTEMA DE AUDIO CORREGIDO ---
+const audioFondo = document.getElementById('bg-audio');
+const musicBtn = document.getElementById('musicBtn');
+const selectorMusica = document.getElementById('bg-music-select');
 
-        // Pistas de audio actualizadas a MP3 más fiables (Hotlinks estables)
-        const pistasAudio = {
-            naturaleza: "https://cdn.pixabay.com/download/audio/2025/08/10/audio_bbd8e34696.mp3?filename=universfield-tranquil-flow-387676.mp3",
-            rio: "https://www.soundjay.com/nature/sounds/river-2.mp3",
-            instrumental: "https://www.soundjay.com/nature/sounds/rain-01.mp3" 
-        };
+// Lista de archivos locales (asegúrate de que los nombres coincidan exactamente)
+const archivos = {
+    naturaleza: "naturaleza.mp3",
+    rio: "rio.mp3",
+    instrumental: "instrumental.mp3"
+};
 
-        function iniciarAudio() {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-        }
-        document.body.addEventListener('click', iniciarAudio, { once: true });
+// Función para alternar reproducción
+function toggleMusica() {
+    if (audioFondo.paused) {
+        audioFondo.play().catch(e => console.error("Error al reproducir:", e));
+        musicBtn.innerText = '🔊';
+    } else {
+        audioFondo.pause();
+        musicBtn.innerText = '🔇';
+    }
+}
 
-        function initBackgroundAudio() {
-            if (!audioFondo) {
-                // Ahora controlamos el elemento HTML <audio> en lugar del inestable 'new Audio()'
-                audioFondo = document.getElementById('bg-audio');
-                if(!audioFondo.src) {
-                    audioFondo.src = pistasAudio[document.getElementById('bg-music-select').value];
-                }
-                audioFondo.volume = 0.25; // Volumen suave
-            }
-        }
+// Función para cambiar la pista desde el selector
+function cambiarMusica() {
+    const nuevaPista = archivos[selectorMusica.value];
+    const estabaSonando = !audioFondo.paused;
+    
+    audioFondo.src = nuevaPista;
+    audioFondo.load();
+    
+    if (estabaSonando) {
+        audioFondo.play().catch(e => console.error("Error al cambiar:", e));
+    }
+}
 
-        function toggleMusica() {
-            initBackgroundAudio();
-            const btn = document.getElementById('musicBtn');
-            if (isPlayingFondo) {
-                audioFondo.pause();
-                isPlayingFondo = false;
-                btn.innerText = '🔇';
-            } else {
-                audioFondo.play().catch(e => console.log("Navegador bloquea autoplay: ", e));
-                isPlayingFondo = true;
-                btn.innerText = '🔊';
-            }
-        }
-
-        function cambiarMusica() {
-            initBackgroundAudio();
-            const nuevaPista = pistasAudio[document.getElementById('bg-music-select').value];
-            const estabaReproduciendo = !audioFondo.paused;
-            
-            audioFondo.src = nuevaPista;
-            audioFondo.load(); // Forzar al navegador a cargar la nueva pista
-            
-            if (estabaReproduciendo) {
-                audioFondo.play();
-            }
-        }
-
-        function emitirSonido(tipo) {
-            if (!audioCtx) return;
-            let osc = audioCtx.createOscillator();
-            let gain = audioCtx.createGain();
-            osc.connect(gain); gain.connect(audioCtx.destination);
-
-            if (tipo === 'click') {
-                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.1);
-            } else if (tipo === 'exito') {
-                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
-                osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); 
-                osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2); 
-                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.4);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.4);
-            } else if (tipo === 'error') {
-                osc.type = 'square';
-                osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-                osc.frequency.setValueAtTime(100, audioCtx.currentTime + 0.15);
-                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.3);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.3);
-            } else if (tipo === 'victoria') {
-                osc.frequency.setValueAtTime(440, audioCtx.currentTime);
-                osc.frequency.setValueAtTime(554, audioCtx.currentTime + 0.2);
-                osc.frequency.setValueAtTime(659, audioCtx.currentTime + 0.4);
-                osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.6);
-                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.0);
-                osc.start(); osc.stop(audioCtx.currentTime + 1.0);
-            }
-        }
+// Inicialización al hacer clic
+document.body.addEventListener('click', () => {
+    // Esto asegura que el audio esté listo para sonar tras la primera interacción
+    if (audioFondo.src === "") {
+        audioFondo.src = archivos[selectorMusica.value];
+    }
+}, { once: true });
 
         // --- SISTEMA DE PUNTUACIÓN (Errores) ---
         let errT2 = 0, errT3 = 0, errT4 = 0, errT5 = 0;
