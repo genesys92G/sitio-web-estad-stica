@@ -1,2 +1,2 @@
-# Cycle-PPDAC
+# Web-Educativa
 Plataforma educativa diseñada para el fortalecimiento...
